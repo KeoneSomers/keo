@@ -1,5 +1,26 @@
 <script setup>
 import TurndownService from "turndown";
+import {
+  RiBold,
+  RiItalic,
+  RiStrikethrough,
+  RiCodeLine,
+  RiParagraph,
+  RiH1,
+  RiH2,
+  RiH3,
+  RiH4,
+  RiH5,
+  RiH6,
+  RiListUnordered,
+  RiListOrdered,
+  RiCodeBlock,
+  RiQuoteText,
+  RiRulerLine,
+  RiSpace,
+  RiArrowGoBackLine,
+  RiArrowGoForwardLine,
+} from "@remixicon/vue";
 
 var turndownService = new TurndownService({ headingStyle: "atx" });
 
@@ -38,7 +59,7 @@ onBeforeUnmount(() => {
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('bold') }"
       >
-        bold
+        <RiBold size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleItalic().run()"
@@ -46,7 +67,7 @@ onBeforeUnmount(() => {
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('italic') }"
       >
-        italic
+        <RiItalic size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleStrike().run()"
@@ -54,7 +75,7 @@ onBeforeUnmount(() => {
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('strike') }"
       >
-        strike
+        <RiStrikethrough size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleCode().run()"
@@ -62,9 +83,9 @@ onBeforeUnmount(() => {
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('code') }"
       >
-        code
+        <RiCodeLine size="16px" />
       </button>
-      <button
+      <!-- <button
         @click="editor.chain().focus().unsetAllMarks().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
       >
@@ -75,109 +96,111 @@ onBeforeUnmount(() => {
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
       >
         clear nodes
-      </button>
+      </button> -->
       <button
         @click="editor.chain().focus().setParagraph().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('paragraph') }"
       >
-        paragraph
+        <RiParagraph size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
       >
-        h1
+        <RiH1 size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
       >
-        h2
+        <RiH2 size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
       >
-        h3
+        <RiH3 size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
       >
-        h4
+        <RiH4 size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
       >
-        h5
+        <RiH5 size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
       >
-        h6
+        <RiH6 size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleBulletList().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('bulletList') }"
       >
-        bullet list
+        <RiListUnordered size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleOrderedList().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('orderedList') }"
       >
-        ordered list
+        <RiListOrdered size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleCodeBlock().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('codeBlock') }"
       >
-        code block
+        <RiCodeBlock size="16px" />
       </button>
       <button
         @click="editor.chain().focus().toggleBlockquote().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
         :class="{ 'is-active': editor.isActive('blockquote') }"
       >
-        blockquote
+        <RiQuoteText size="16px" />
       </button>
       <button
         @click="editor.chain().focus().setHorizontalRule().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
       >
-        horizontal rule
+        <RiRulerLine size="16px" />
       </button>
       <button
         @click="editor.chain().focus().setHardBreak().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
       >
-        hard break
+        <RiSpace size="16px" />
       </button>
       <button
         @click="editor.chain().focus().undo().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
+        :class="{ 'opacity-50': !editor.can().chain().focus().undo().run() }"
         :disabled="!editor.can().chain().focus().undo().run()"
       >
-        undo
+        <RiArrowGoBackLine size="16px" />
       </button>
       <button
         @click="editor.chain().focus().redo().run()"
         class="m-1 bg-zinc-700 rounded p-1 text-xs"
+        :class="{ 'opacity-50': !editor.can().chain().focus().redo().run() }"
         :disabled="!editor.can().chain().focus().redo().run()"
       >
-        redo
+        <RiArrowGoForwardLine size="16px" />
       </button>
     </div>
     <div class="overflow-auto flex flex-1">
