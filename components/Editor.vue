@@ -29,6 +29,7 @@ const notesMarkdown = useState("notesMarkdown", () => "");
 
 const editor = useEditor({
   content: notesHTML.value,
+  autofocus: true,
   extensions: [TiptapStarterKit],
   editorProps: {
     attributes: {
@@ -49,10 +50,15 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="flex flex-col h-[calc(100vh-56px)]">
-    <div class="p-4 border-b border-zinc-700 border-dashed">
-      <span>New task</span>
+    <div class="border-b border-zinc-700 border-dashed">
+      <UInput
+        placeholder="Give this task a name..."
+        size="xl"
+        variant="none"
+        class="p-1.5"
+      />
     </div>
-    <div v-if="editor" class="border-b border-zinc-700 border-dashed p-3">
+    <div v-if="editor" class="bg-zinc-800 m-2 rounded p-1">
       <button
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
