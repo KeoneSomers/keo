@@ -111,6 +111,7 @@ const selectTask = async (taskId) => {
   }
 
   selectedTask.value = data;
+  console.log(data);
 };
 </script>
 

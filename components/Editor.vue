@@ -1,5 +1,5 @@
 <script setup>
-import { watchDebounced } from "@vueuse/core";
+import { watchDebounced, useDebounceFn } from "@vueuse/core";
 import TurndownService from "turndown";
 import {
   RiBold,
@@ -25,11 +25,16 @@ import {
 
 var turndownService = new TurndownService({ headingStyle: "atx" });
 
-const notesHTML = useState("notesHTML", () => " ");
+const supabase = useSupabaseClient();
+const tasks = useState("tasks", () => []);
+const selectedTask = useState("selectedTask");
+
+const title = ref("");
+
 const notesMarkdown = useState("notesMarkdown", () => "");
 
 const editor = useEditor({
-  content: notesHTML.value,
+  content: selectedTask.value.notes ? selectedTask.value.notes : "",
   autofocus: true,
   extensions: [TiptapStarterKit],
   editorProps: {
@@ -39,8 +44,11 @@ const editor = useEditor({
     },
   },
   onUpdate: ({ editor }) => {
-    notesHTML.value = editor.getHTML();
-    notesMarkdown.value = turndownService.turndown(editor.getHTML().toString());
+    selectedTask.value.notes = editor.getHTML();
+    notesMarkdown.value = turndownService.turndown(editor.getHTML());
+
+    // call debounced save function
+    debouncedFnSaveNotes();
   },
 });
 
@@ -48,27 +56,30 @@ onBeforeUnmount(() => {
   unref(editor).destroy();
 });
 
-const supabase = useSupabaseClient();
-const tasks = useState("tasks", () => []);
-const selectedTask = useState("selectedTask");
+watch(selectedTask, async (newState, oldState) => {
+  console.log("task changed");
+  title.value = newState.title;
 
-const title = ref("");
-
-watchEffect(async () => {
-  title.value = selectedTask.value.title;
+  if (newState.notes) {
+    editor.value.commands.setContent(selectedTask.value.notes);
+  } else {
+    editor.value.commands.setContent("");
+  }
 });
 
 // debounced saving
 watchDebounced(
   title,
   () => {
-    saveTitle();
+    if (title.value !== selectedTask.value.title) {
+      saveTitle();
+    }
   },
   { debounce: 1000, maxWait: 5000 }
 );
 
 const saveTitle = async () => {
-  console.log("Saving changes");
+  console.log("Saving title");
   const { error } = await supabase
     .from("tasks")
     .update({ title: title.value })
@@ -87,6 +98,23 @@ const saveTitle = async () => {
     (item) => item.id === selectedTask.value.id
   );
   tasks.value[index].title = title.value;
+};
+
+const debouncedFnSaveNotes = useDebounceFn(() => {
+  saveNotes();
+}, 2000);
+
+const saveNotes = async () => {
+  console.log("Saving notes");
+  const { error } = await supabase
+    .from("tasks")
+    .update({ notes: selectedTask.value.notes })
+    .eq("id", selectedTask.value.id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
 };
 </script>
 
