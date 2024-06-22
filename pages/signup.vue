@@ -35,7 +35,12 @@ const signUp = async () => {
     password: state.password,
   });
 
-  if (error) errors.value.push(error);
+  if (error) {
+    errors.value.push(error);
+    return;
+  }
+
+  await navigateTo("/");
 };
 </script>
 

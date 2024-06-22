@@ -4,12 +4,20 @@ const searchQuery = ref("");
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
+const tasks = useState("tasks", () => []);
+const selectedTask = useState("selectedTask", () => null);
+
 const signOut = async () => {
   const { error } = await supabase.auth.signOut();
-  if (error) console.log(error);
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  await navigateTo("/login");
 };
 
-const items = [
+const accountDropdownItems = [
   [
     {
       label: "Logout",
@@ -20,6 +28,64 @@ const items = [
     },
   ],
 ];
+
+const getTasks = async () => {
+  const { data, error } = await supabase
+    .from("tasks")
+    .select("id, title")
+    .eq("created_by", user.value.id);
+
+  console.log(data);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  tasks.value = data;
+};
+
+getTasks();
+
+const createNewTask = async () => {
+  // Create task in superbase
+  const { data, error } = await supabase
+    .from("tasks")
+    .insert({
+      created_by: user.value.id,
+      title: null,
+      notes: null,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  selectedTask.value = data;
+
+  // Update local state
+  tasks.value.push(data);
+};
+
+const selectTask = async (taskId) => {
+  const { data, error } = await supabase
+    .from("tasks")
+    .select()
+    .single()
+    .eq("id", taskId);
+
+  console.log(data);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  selectedTask.value = data;
+};
 </script>
 
 <template>
@@ -30,7 +96,10 @@ const items = [
       <span class="font-mono font-bold">keo.dev</span>
       <!-- <span>{{ user.email }}</span>
       <UButton @click="signOut">Logout</UButton> -->
-      <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
+      <UDropdown
+        :items="accountDropdownItems"
+        :popper="{ placement: 'bottom-start' }"
+      >
         <UButton
           color="white"
           :label="user.email"
@@ -52,10 +121,30 @@ const items = [
           </span>
         </div>
         <div class="p-3 border-b border-zinc-700 border-dashed">
-          <UButton block color="black">New Task</UButton>
+          <UButton @click="createNewTask" block color="black">New Task</UButton>
         </div>
-        <div class="p-4 border-b border-zinc-700 border-dashed">
-          <span class="opacity-50">Your task</span>
+        <div
+          v-for="task in tasks"
+          :key="task.id"
+          @click="selectTask(task.id)"
+          class="px-4 py-3 m-2 rounded border-b border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer"
+          :class="[
+            {
+              'bg-zinc-800':
+                selectedTask !== null && task.id === selectedTask.id,
+            },
+            {
+              'opacity-50':
+                selectedTask === null ||
+                (selectedTask !== null && task.id !== selectedTask.id),
+            },
+          ]"
+        >
+          <span>{{
+            task.title === "" || task.title === null
+              ? "Unnamed Task"
+              : task.title
+          }}</span>
         </div>
       </div>
       <div class="flex flex-1">
