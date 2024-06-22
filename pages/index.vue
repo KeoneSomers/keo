@@ -46,11 +46,32 @@ const getTasks = async () => {
 
   // select the first task automatically
   if (tasks.value.length > 0) {
-    await selectTask(tasks.value[0].id);
+    await selectTask(tasks.value[tasks.value.length - 1].id);
   }
 };
 
 getTasks();
+
+const filteredAndSortedTasks = computed(() => {
+  // Filter items based on search string
+  let filteredItems = tasks.value.filter((item) => {
+    if (searchQuery.value === "") {
+      return true;
+    } else {
+      return (
+        item.title !== null &&
+        item.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+    }
+  });
+
+  // Sort items by create_at date
+  filteredItems.sort((a, b) => {
+    return b.id - a.id;
+  });
+
+  return filteredItems;
+});
 
 const createNewTask = async () => {
   // Create task in superbase
@@ -129,10 +150,10 @@ const selectTask = async (taskId) => {
           <UButton @click="createNewTask" block color="black">New Task</UButton>
         </div>
         <div
-          v-for="task in tasks"
+          v-for="task in filteredAndSortedTasks"
           :key="task.id"
           @click="selectTask(task.id)"
-          class="px-4 py-3 m-2 rounded border-b border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
+          class="px-4 py-3 m-2 text-sm rounded border-b border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
               'bg-zinc-800':
