@@ -33,7 +33,8 @@ const getTasks = async () => {
   const { data, error } = await supabase
     .from("tasks")
     .select("id, title")
-    .eq("created_by", user.value.id);
+    .eq("created_by", user.value.id)
+    .order("id", { ascending: false });
 
   console.log(data);
 
@@ -46,7 +47,7 @@ const getTasks = async () => {
 
   // select the first task automatically
   if (tasks.value.length > 0) {
-    await selectTask(tasks.value[tasks.value.length - 1].id);
+    await selectTask(tasks.value[0].id);
   }
 };
 
@@ -74,13 +75,23 @@ const filteredAndSortedTasks = computed(() => {
 });
 
 const createNewTask = async () => {
+  // create gpt chat thread for the task
+  const { data: thread } = await useFetch("/api/createChatThread");
+  console.log(thread.value.id);
+
+  if (!thread.value) {
+    console.log("No thread was created and returned.");
+    return;
+  }
+
   // Create task in superbase
-  const { data, error } = await supabase
+  const { data: newTask, error } = await supabase
     .from("tasks")
     .insert({
       created_by: user.value.id,
       title: null,
       notes: null,
+      chat_thread_id: thread.value.id,
     })
     .select()
     .single();
@@ -90,10 +101,10 @@ const createNewTask = async () => {
     return;
   }
 
-  selectedTask.value = data;
+  selectedTask.value = newTask;
 
   // Update local state
-  tasks.value.push(data);
+  tasks.value.push(newTask);
 };
 
 const selectTask = async (taskId) => {
