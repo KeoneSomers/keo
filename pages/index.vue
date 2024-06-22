@@ -43,6 +43,11 @@ const getTasks = async () => {
   }
 
   tasks.value = data;
+
+  // select the first task automatically
+  if (tasks.value.length > 0) {
+    await selectTask(tasks.value[0].id);
+  }
 };
 
 getTasks();
@@ -127,7 +132,7 @@ const selectTask = async (taskId) => {
           v-for="task in tasks"
           :key="task.id"
           @click="selectTask(task.id)"
-          class="px-4 py-3 m-2 rounded border-b border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer"
+          class="px-4 py-3 m-2 rounded border-b border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
               'bg-zinc-800':
@@ -147,13 +152,19 @@ const selectTask = async (taskId) => {
           }}</span>
         </div>
       </div>
-      <div class="flex flex-1">
+      <div v-if="selectedTask" class="flex flex-1">
         <div class="flex flex-col flex-1 border-r dark:border-zinc-600">
           <Editor />
         </div>
         <div class="flex-1 p-4">
           <Chat />
         </div>
+      </div>
+      <div
+        v-else
+        class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
+      >
+        <span class="opacity-45">No task selected.</span>
       </div>
     </div>
   </div>

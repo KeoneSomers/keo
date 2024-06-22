@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "nuxt-tiptap-editor",
     "@nuxtjs/supabase",
+    "@vueuse/nuxt",
   ],
   colorMode: {
     preference: "dark",

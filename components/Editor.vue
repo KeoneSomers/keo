@@ -1,4 +1,5 @@
 <script setup>
+import { watchDebounced } from "@vueuse/core";
 import TurndownService from "turndown";
 import {
   RiBold,
@@ -46,12 +47,54 @@ const editor = useEditor({
 onBeforeUnmount(() => {
   unref(editor).destroy();
 });
+
+const supabase = useSupabaseClient();
+const tasks = useState("tasks", () => []);
+const selectedTask = useState("selectedTask");
+
+const title = ref("");
+
+watchEffect(async () => {
+  title.value = selectedTask.value.title;
+});
+
+// debounced saving
+watchDebounced(
+  title,
+  () => {
+    saveTitle();
+  },
+  { debounce: 1000, maxWait: 5000 }
+);
+
+const saveTitle = async () => {
+  console.log("Saving changes");
+  const { error } = await supabase
+    .from("tasks")
+    .update({ title: title.value })
+    .eq("id", selectedTask.value.id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  // update local state
+  selectedTask.value.title = title.value;
+
+  // For the title - also need to update it in the sidebar list
+  const index = tasks.value.findIndex(
+    (item) => item.id === selectedTask.value.id
+  );
+  tasks.value[index].title = title.value;
+};
 </script>
 
 <template>
   <div class="flex flex-col h-[calc(100vh-56px)]">
     <div class="border-b border-zinc-700 border-dashed">
       <UInput
+        v-model="title"
         placeholder="Give this task a name..."
         size="xl"
         variant="none"
