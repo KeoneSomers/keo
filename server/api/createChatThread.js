@@ -1,8 +1,10 @@
 import OpenAI from "openai";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+
   const openai = new OpenAI({
-    apiKey: "sk-proj-HFc1dIQ0lppPLb0TjWoCT3BlbkFJkZeQvc9GzTXXRSkm5UuJ",
+    apiKey: config.openaiApiKey,
   });
 
   const assistant = await openai.beta.assistants.retrieve(
@@ -10,15 +12,6 @@ export default defineEventHandler(async (event) => {
   );
 
   const thread = await openai.beta.threads.create();
-
-  // TODO: store the threadId in the db for the task
-
-  //   return {
-  //     id: "thread_abc123",
-  //     object: "thread",
-  //     created_at: 1698107661,
-  //     metadata: {},
-  //   };
 
   return thread;
 });

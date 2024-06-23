@@ -36,7 +36,7 @@ const getTasks = async () => {
     .eq("created_by", user.value.id)
     .order("id", { ascending: false });
 
-  console.log(data);
+  // console.log(data);
 
   if (error) {
     console.log(error);
@@ -189,7 +189,7 @@ const selectTask = async (taskId) => {
         <div class="flex flex-col flex-1 border-r dark:border-zinc-600">
           <Editor />
         </div>
-        <div class="flex-1 p-4">
+        <div class="flex-1">
           <Chat />
         </div>
       </div>

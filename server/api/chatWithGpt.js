@@ -1,38 +1,39 @@
 import OpenAI from "openai";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+  const { msg, thread_id } = await readBody(event);
+
   const openai = new OpenAI({
-    apiKey: "sk-proj-HFc1dIQ0lppPLb0TjWoCT3BlbkFJkZeQvc9GzTXXRSkm5UuJ",
+    apiKey: config.openaiApiKey,
   });
 
   const assistant = await openai.beta.assistants.retrieve(
     "asst_GhthCVssiAKe1qZEh1n3fbgZ"
   );
 
-  const thread = await openai.beta.threads.create();
+  // return;
 
-  await openai.beta.threads.retrieve("");
-
-  const message = await openai.beta.threads.messages.create(thread.id, {
+  const message = await openai.beta.threads.messages.create(thread_id, {
     role: "user",
-    content: "Hey!",
+    content: msg,
   });
 
-  let run = await openai.beta.threads.runs.createAndPoll(thread.id, {
+  let run = await openai.beta.threads.runs.createAndPoll(thread_id, {
     assistant_id: assistant.id,
     instructions:
       "Please address the user as friend. The user has a premium account.",
   });
 
   if (run.status === "completed") {
-    const messages = await openai.beta.threads.messages.list(run.thread_id);
+    const messages = await openai.beta.threads.messages.list(run.thread_id, {
+      limit: 2,
+    });
     for (const message of messages.data.reverse()) {
       console.log(`${message.role} > ${message.content[0].text.value}`);
     }
 
-    return {
-      data: messages,
-    };
+    return messages.data;
   } else {
     console.log(run.status);
 

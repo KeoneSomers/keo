@@ -20,4 +20,12 @@ export default defineNuxtConfig({
       cookieRedirect: false,
     },
   },
+  runtimeConfig: {
+    // Private keys are only available on the server
+    openaiApiKey: process.env.OPENAI_API_KEY,
+    // Public keys that also need to be exposed to the client
+    public: {
+      publicApiKey: process.env.PUBLIC_API_KEY,
+    },
+  },
 });
