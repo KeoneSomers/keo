@@ -147,7 +147,7 @@ const selectTask = async (taskId) => {
       <div
         class="w-60 border-r dark:border-zinc-600 overflow-y-auto h-[calc(100vh-56px)]"
       >
-        <div class="border-b border-zinc-700 border-dashed">
+        <div class="border-b border-zinc-700">
           <span class="opacity-50">
             <UInput
               v-model="searchQuery"
@@ -158,14 +158,14 @@ const selectTask = async (taskId) => {
             />
           </span>
         </div>
-        <div class="p-3 border-b border-zinc-700 border-dashed">
+        <div class="p-3">
           <UButton @click="createNewTask" block color="black">New Task</UButton>
         </div>
         <div
           v-for="task in filteredAndSortedTasks"
           :key="task.id"
           @click="selectTask(task.id)"
-          class="px-4 py-3 m-2 text-sm rounded border-b border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
+          class="px-3 py-2 mx-2 my-1 text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
               'bg-zinc-800':
