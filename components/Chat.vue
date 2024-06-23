@@ -1,4 +1,8 @@
 <script setup>
+import TurndownService from "turndown";
+
+var turndownService = new TurndownService({ headingStyle: "atx" });
+
 const notesMarkdown = useState("notesMarkdown", () => "");
 const selectedTask = useState("selectedTask");
 const welcomeMessage = {
@@ -6,12 +10,14 @@ const welcomeMessage = {
   content: [
     {
       text: {
-        value: "Hey there!",
+        value:
+          "Hey there! I'm an AI assistant happy to help you with this task.",
       },
     },
   ],
   role: "assistant",
 };
+const pendingMessage = ref(null);
 const messages = ref([]);
 const newMessage = ref("");
 const loading = ref(false);
@@ -27,6 +33,10 @@ const getThreadMessages = async () => {
 
 watchEffect(async () => {
   if (selectedTask.value) {
+    if (selectedTask.value.notes) {
+      notesMarkdown.value = turndownService.turndown(selectedTask.value.notes);
+    }
+
     await getThreadMessages();
   }
 });
@@ -37,6 +47,7 @@ const sendMessage = async () => {
     const msgNew = newMessage.value;
     newMessage.value = "";
     loading.value = true;
+    pendingMessage.value = msgNew;
 
     const res = await $fetch("/api/chatWithGpt", {
       method: "post",
@@ -47,6 +58,7 @@ const sendMessage = async () => {
     });
     console.log(res);
 
+    pendingMessage.value = null;
     loading.value = false;
     messages.value.push(...res);
   }
@@ -56,26 +68,40 @@ const sendMessage = async () => {
 <template>
   <div class="flex flex-col h-[calc(100vh-56px)] overflow-y-auto">
     <div class="flex-1 flex flex-col justify-end text-sm p-4">
-      {{ notesMarkdown }}
-      <div
-        v-for="message in messages"
-        :key="message.id"
-        class="flex pb-4"
-        :class="[
-          { 'justify-start': message.role === 'assistant' },
-          { 'justify-end': message.role === 'user' },
-        ]"
-      >
-        <span
-          class="py-2 px-3 rounded-lg"
+      <!-- {{ notesMarkdown }} -->
+      <div v-for="message in messages" :key="message.id" class="flex flex-col">
+        <div
+          v-if="message.role === 'assistant'"
+          class="text-xs mb-1 opacity-30 flex items-center"
+        >
+          <span class="i-heroicons-sparkles-16-solid mr-0.5"></span>
+          GPT4o
+        </div>
+        <div
+          class="flex pb-4"
           :class="[
-            { 'bg-zinc-800 mr-6': message.role === 'assistant' },
-            { 'bg-indigo-800 ml-6': message.role === 'user' },
+            { 'justify-start': message.role === 'assistant' },
+            { 'justify-end': message.role === 'user' },
           ]"
         >
-          <span>{{ message.content[0].text.value }}</span>
+          <span
+            class="py-2 px-3 rounded-lg"
+            :class="[
+              { 'bg-zinc-800 mr-6': message.role === 'assistant' },
+              { 'bg-indigo-800 ml-6': message.role === 'user' },
+            ]"
+          >
+            <span>{{ message.content[0].text.value }}</span>
+          </span>
+        </div>
+      </div>
+      <!-- Pending msg -->
+      <div v-if="pendingMessage" class="flex pb- justify-end">
+        <span class="py-2 px-3 rounded-lg bg-indigo-800 ml-6">
+          <span>{{ pendingMessage }}</span>
         </span>
       </div>
+      <!-- Loading indicator message -->
       <div>
         <div v-if="loading" class="flex">
           <div
