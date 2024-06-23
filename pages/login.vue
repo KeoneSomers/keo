@@ -42,8 +42,8 @@ const login = async () => {
       <div class="mb-4 pb-4 border-b-zinc-700 border-b">
         <div class="text-2xl">Login</div>
         <ULink to="/" class="text-xs flex items-center mt-2 opacity-50"
-          ><UIcon name="i-heroicons-arrow-left-16-solid" class="mr-1" /> Return
-          to homepage</ULink
+          ><UIcon name="i-heroicons-arrow-left-16-solid" class="mr-1" /> Back to
+          homepage</ULink
         >
       </div>
       <UForm :state="state" @submit="login" class="space-y-4">

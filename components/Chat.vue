@@ -53,6 +53,7 @@ const sendMessage = async () => {
       method: "post",
       body: {
         msg: msgNew,
+        notes: notesMarkdown.value,
         thread_id: selectedTask.value.chat_thread_id,
       },
     });
