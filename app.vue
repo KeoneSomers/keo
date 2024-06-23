@@ -14,14 +14,7 @@ supabase.auth.onAuthStateChange(async (event) => {
 </script>
 
 <template>
-  <div>
+  <div class="dark:bg-zinc-950">
     <NuxtPage />
   </div>
 </template>
-
-<style>
-html,
-body {
-  overflow: hidden;
-}
-</style>

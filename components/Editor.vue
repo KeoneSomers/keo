@@ -123,16 +123,16 @@ const saveNotes = async () => {
 
 <template>
   <div class="flex flex-col h-[calc(100vh-56px)]">
-    <div class="border-b border-zinc-700 border-dashed">
+    <div class="border-b border-zinc-700">
       <UInput
         v-model="title"
         placeholder="Give this task a name..."
         size="xl"
         variant="none"
-        class="p-1.5"
+        class="p-0.5"
       />
     </div>
-    <div v-if="editor" class="bg-zinc-900 m-2 rounded p-1">
+    <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1">
       <button
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"

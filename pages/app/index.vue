@@ -125,42 +125,29 @@ const selectTask = async (taskId) => {
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <div
-      class="h-14 flex border-b dark:border-zinc-600 px-4 items-center justify-between"
-    >
-      <span class="font-mono font-bold">keo.dev</span>
-      <!-- <span>{{ user.email }}</span>
-      <UButton @click="signOut">Logout</UButton> -->
-      <UDropdown
-        :items="accountDropdownItems"
-        :popper="{ placement: 'bottom-start' }"
-      >
-        <UButton
-          color="white"
-          :label="user.email"
-          trailing-icon="i-heroicons-chevron-down-20-solid"
-        />
-      </UDropdown>
-    </div>
-    <div class="flex flex-1">
-      <div
-        class="w-60 border-r dark:border-zinc-600 overflow-y-auto h-[calc(100vh-56px)]"
-      >
-        <div class="border-b border-zinc-700">
-          <span class="opacity-50">
-            <UInput
-              v-model="searchQuery"
-              icon="i-heroicons-magnifying-glass-20-solid"
-              placeholder="Search..."
-              variant="none"
-              class="p-3 pl-0"
-            />
-          </span>
-        </div>
-        <div class="p-3">
-          <UButton @click="createNewTask" block color="black">New Task</UButton>
-        </div>
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="w-60 overflow-y-auto h-screen flex flex-col">
+      <div class="px-4 py-4">
+        <span class="font-mono font-bold">keo.dev</span>
+      </div>
+
+      <div class="p-4">
+        <UButton @click="createNewTask" block color="black">New Task</UButton>
+      </div>
+      <!-- search bar -->
+      <div class="border-zinc-700">
+        <span class="opacity-50">
+          <UInput
+            v-model="searchQuery"
+            icon="i-heroicons-magnifying-glass-20-solid"
+            placeholder="Search..."
+            class="mx-4 mb-2"
+          />
+        </span>
+      </div>
+      <!-- tasks list -->
+      <div class="flex-1 overflow-y-auto">
         <div
           v-for="task in filteredAndSortedTasks"
           :key="task.id"
@@ -185,20 +172,38 @@ const selectTask = async (taskId) => {
           }}</span>
         </div>
       </div>
-      <div v-if="selectedTask" class="flex flex-1">
-        <div class="flex flex-col flex-1 border-r dark:border-zinc-600">
-          <Editor />
-        </div>
-        <div class="flex-1">
-          <Chat />
-        </div>
+
+      <!-- account dropdown -->
+      <div class="bg-zinc-900 rounded-lg m-4">
+        <UDropdown
+          :items="accountDropdownItems"
+          :popper="{ placement: 'bottom-start' }"
+        >
+          <UButton
+            color="white"
+            :label="user.email"
+            trailing-icon="i-heroicons-chevron-down-20-solid"
+            block
+            truncate
+          />
+        </UDropdown>
       </div>
+    </div>
+    <div v-if="selectedTask" class="flex flex-1 h-screen p-2 pl-0 space-x-1">
       <div
-        v-else
-        class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
+        class="flex flex-col flex-1 dark:border-zinc-800 border rounded-lg bg-zinc-900"
       >
-        <span class="opacity-45">No task selected.</span>
+        <Editor />
       </div>
+      <div class="flex-1 border rounded-lg dark:border-zinc-800 bg-zinc-900">
+        <Chat />
+      </div>
+    </div>
+    <div
+      v-else
+      class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
+    >
+      <span class="opacity-45">No task selected.</span>
     </div>
   </div>
 </template>
