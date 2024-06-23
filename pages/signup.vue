@@ -39,8 +39,6 @@ const signUp = async () => {
     errors.value.push(error);
     return;
   }
-
-  await navigateTo("/");
 };
 </script>
 
@@ -48,7 +46,11 @@ const signUp = async () => {
   <div class="flex justify-center items-center h-screen">
     <div class="w-96">
       <div class="mb-4 pb-4 border-b-zinc-700 border-b">
-        <span class="text-2xl">Create an account</span>
+        <div class="text-2xl">Create an account</div>
+        <ULink to="/" class="text-xs flex items-center mt-2 opacity-50"
+          ><UIcon name="i-heroicons-arrow-left-16-solid" class="mr-1" /> Return
+          to homepage</ULink
+        >
       </div>
       <UForm :state="state" @submit="signUp" class="space-y-4">
         <UFormGroup label="Email" name="email">
