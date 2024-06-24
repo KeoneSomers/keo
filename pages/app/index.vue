@@ -154,6 +154,11 @@ const createNewTask = async () => {
 };
 
 const selectTask = async (taskId) => {
+  if (taskId === selectedTask.value.id) {
+    // Prevent re-selecting a task thats already selected (prevent spam clicking)
+    return;
+  }
+
   const { data, error } = await supabase
     .from("tasks")
     .select()
