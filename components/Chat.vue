@@ -1,7 +1,21 @@
 <script setup>
 import TurndownService from "turndown";
+import { useResizeObserver } from "@vueuse/core";
 
 var turndownService = new TurndownService({ headingStyle: "atx" });
+
+const scrollContainer = ref(null);
+const resize = ref(null);
+
+const scrollToBottom = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+  }
+};
+
+useResizeObserver(resize, (entries) => {
+  scrollToBottom();
+});
 
 const notesMarkdown = useState("notesMarkdown", () => "");
 const selectedTask = useState("selectedTask");
@@ -64,24 +78,6 @@ const sendMessage = async () => {
     messages.value.push(...res);
   }
 };
-
-// Reference to the scroll container div
-const scrollContainer = ref(null);
-
-// Function to scroll to the bottom
-const scrollToBottom = () => {
-  if (scrollContainer.value) {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-  }
-};
-
-// Watch for updates to the DOM and scroll to the bottom
-onUpdated(() => {
-  nextTick(() => {
-    console.log("Scrolling to bottom");
-    scrollToBottom();
-  });
-});
 </script>
 
 <template>
@@ -89,7 +85,7 @@ onUpdated(() => {
     ref="scrollContainer"
     class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-y-auto"
   >
-    <div class="flex-1 flex flex-col justify-end text-sm p-4">
+    <div ref="resize" class="flex-1 flex flex-col justify-end text-sm p-4">
       <!-- {{ notesMarkdown }} -->
       <div v-for="message in messages" :key="message.id" class="flex flex-col">
         <div
