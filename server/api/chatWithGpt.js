@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   let run = await openai.beta.threads.runs.createAndPoll(thread_id, {
     assistant_id: assistant.id,
-    instructions: `Please address the user as friend. Please use the users notes deliminated by the tripple quotes as additional context, This may sometimes be empty, in that case ignore it. """${notes}"""`,
+    instructions: `"""${notes}"""`,
   });
 
   if (run.status === "completed") {
