@@ -195,7 +195,7 @@ const selectTask = async (taskId) => {
           v-for="task in filteredAndSortedTasks"
           :key="task.id"
           @click="selectTask(task.id)"
-          class="px-3 py-2 mx-4 my-1 text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
+          class="p-2 mx-4 my-1 text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
               'bg-zinc-900':

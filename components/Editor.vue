@@ -82,7 +82,7 @@ const saveNotes = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-[calc(100vh-16px-57px)] overflow-auto">
+  <div class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-auto">
     <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1 sticky top-0">
       <button
         @click="editor.chain().focus().toggleBold().run()"
