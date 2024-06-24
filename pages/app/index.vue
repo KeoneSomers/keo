@@ -122,7 +122,7 @@ const throttledFnCreateNewTask = useThrottleFn(() => {
 
 const createNewTask = async () => {
   // create gpt chat thread for the task
-  const { data: thread } = await useFetch("/api/createChatThread");
+  const { data: thread } = await useFetch("/api/openai/threads/create");
   console.log(thread.value.id);
 
   if (!thread.value) {
@@ -196,7 +196,41 @@ const taskOptions = [
 ];
 
 const clearChat = async () => {
-  // TODO: Clear the chat thread
+  console.log("here");
+  // create a new thread
+  const { data: thread } = await useFetch("/api/openai/threads/create");
+  console.log(thread.value.id);
+
+  if (!thread.value) {
+    console.log(
+      "No new thread was created and returned. Aborting refresh thread."
+    );
+    return;
+  }
+
+  let oldThreadId = selectedTask.value.chat_thread_id;
+  selectedTask.value.chat_thread_id = thread.value.id;
+
+  // update chat_thread_id in database
+  const { error } = await supabase
+    .from("tasks")
+    .update({ chat_thread_id: thread.value.id })
+    .eq("id", selectedTask.value.id);
+
+  // delete old thread
+  const { id, object, deleted } = await $fetch("/api/openai/threads/delete", {
+    method: "post",
+    body: {
+      thread_id: oldThreadId,
+    },
+  });
+
+  if (!deleted) {
+    console.log("Error deleting old chat thread, aborting task deletion.");
+    return;
+  }
+
+  isOpenClearConfirmation.value = false;
 };
 
 const deleteTask = async () => {
