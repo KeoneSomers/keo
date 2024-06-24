@@ -67,7 +67,7 @@ const sendMessage = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-[calc(100vh-56px)] overflow-y-auto">
+  <div class="flex flex-col h-[calc(100vh-16px-57px)] overflow-y-auto">
     <div class="flex-1 flex flex-col justify-end text-sm p-4">
       <!-- {{ notesMarkdown }} -->
       <div v-for="message in messages" :key="message.id" class="flex flex-col">

@@ -1,11 +1,52 @@
 <script setup>
+import { watchDebounced } from "@vueuse/core";
+
 const searchQuery = ref("");
 
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
+const title = ref("");
+
 const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
+
+watchEffect(async () => {
+  title.value = selectedTask.value.title;
+});
+
+// debounced saving
+watchDebounced(
+  title,
+  () => {
+    if (title.value !== selectedTask.value.title) {
+      saveTitle();
+    }
+  },
+  { debounce: 1000, maxWait: 5000 }
+);
+
+const saveTitle = async () => {
+  console.log("Saving title");
+  const { error } = await supabase
+    .from("tasks")
+    .update({ title: title.value })
+    .eq("id", selectedTask.value.id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  // update local state
+  selectedTask.value.title = title.value;
+
+  // For the title - also need to update it in the sidebar list
+  const index = tasks.value.findIndex(
+    (item) => item.id === selectedTask.value.id
+  );
+  tasks.value[index].title = title.value;
+};
 
 const signOut = async () => {
   const { error } = await supabase.auth.signOut();
@@ -127,7 +168,7 @@ const selectTask = async (taskId) => {
 <template>
   <div class="flex">
     <!-- Sidebar -->
-    <div class="w-60 overflow-y-auto h-screen flex flex-col">
+    <div class="w-64 overflow-y-auto h-screen flex flex-col">
       <div class="px-4 py-4">
         <span class="font-mono font-bold">keo.dev</span>
       </div>
@@ -155,7 +196,7 @@ const selectTask = async (taskId) => {
           class="px-3 py-2 mx-4 my-1 text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
-              'bg-zinc-800':
+              'bg-zinc-900':
                 selectedTask !== null && task.id === selectedTask.id,
             },
             {
@@ -189,21 +230,37 @@ const selectTask = async (taskId) => {
         </UDropdown>
       </div>
     </div>
-    <div v-if="selectedTask" class="flex flex-1 h-screen p-2 pl-0 space-x-1">
+    <div class="p-2 flex-1 pl-0 h-screen">
       <div
-        class="flex flex-col flex-1 dark:border-zinc-800 border rounded-lg bg-zinc-900"
+        v-if="selectedTask"
+        class="flex flex-col flex-1 pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-zinc-900"
       >
-        <Editor />
+        <div class="p-1 border-b dark:border-zinc-800">
+          <UInput
+            v-model="title"
+            placeholder="Give this task a name..."
+            size="xl"
+            variant="none"
+            class="p-0.5"
+          />
+        </div>
+        <div class="flex">
+          <div
+            class="flex flex-col flex-1 dark:border-zinc-800 border-r bg-zinc-900"
+          >
+            <Editor />
+          </div>
+          <div class="flex-1 bg-zinc-900">
+            <Chat />
+          </div>
+        </div>
       </div>
-      <div class="flex-1 border rounded-lg dark:border-zinc-800 bg-zinc-900">
-        <Chat />
+      <div
+        v-else
+        class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
+      >
+        <span class="opacity-45">No task selected.</span>
       </div>
-    </div>
-    <div
-      v-else
-      class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
-    >
-      <span class="opacity-45">No task selected.</span>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import { watchDebounced, useDebounceFn } from "@vueuse/core";
+import { useDebounceFn } from "@vueuse/core";
 import TurndownService from "turndown";
 import {
   RiBold,
@@ -26,10 +26,7 @@ import {
 var turndownService = new TurndownService({ headingStyle: "atx" });
 
 const supabase = useSupabaseClient();
-const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask");
-
-const title = ref("");
 
 const notesMarkdown = useState("notesMarkdown", () => "");
 
@@ -56,10 +53,6 @@ onBeforeUnmount(() => {
   unref(editor).destroy();
 });
 
-watchEffect(async () => {
-  title.value = selectedTask.value.title;
-});
-
 watch(selectedTask, async (newState, oldState) => {
   console.log("task changed");
 
@@ -69,39 +62,6 @@ watch(selectedTask, async (newState, oldState) => {
     editor.value.commands.setContent("");
   }
 });
-
-// debounced saving
-watchDebounced(
-  title,
-  () => {
-    if (title.value !== selectedTask.value.title) {
-      saveTitle();
-    }
-  },
-  { debounce: 1000, maxWait: 5000 }
-);
-
-const saveTitle = async () => {
-  console.log("Saving title");
-  const { error } = await supabase
-    .from("tasks")
-    .update({ title: title.value })
-    .eq("id", selectedTask.value.id);
-
-  if (error) {
-    console.log(error);
-    return;
-  }
-
-  // update local state
-  selectedTask.value.title = title.value;
-
-  // For the title - also need to update it in the sidebar list
-  const index = tasks.value.findIndex(
-    (item) => item.id === selectedTask.value.id
-  );
-  tasks.value[index].title = title.value;
-};
 
 const debouncedFnSaveNotes = useDebounceFn(() => {
   saveNotes();
@@ -122,17 +82,8 @@ const saveNotes = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-[calc(100vh-56px)]">
-    <div class="border-b border-zinc-700">
-      <UInput
-        v-model="title"
-        placeholder="Give this task a name..."
-        size="xl"
-        variant="none"
-        class="p-0.5"
-      />
-    </div>
-    <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1">
+  <div class="flex flex-col h-[calc(100vh-16px-57px)] overflow-auto">
+    <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1 sticky top-0">
       <button
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
@@ -283,7 +234,7 @@ const saveNotes = async () => {
         <RiArrowGoForwardLine size="16px" />
       </button>
     </div>
-    <div class="overflow-auto flex flex-1">
+    <div class="flex flex-1">
       <div class="flex-1">
         <TiptapEditorContent :editor="editor" class="h-full" />
       </div>
