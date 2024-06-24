@@ -12,14 +12,16 @@ const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
 
 watchEffect(async () => {
-  title.value = selectedTask.value.title;
+  if (selectedTask.value) {
+    title.value = selectedTask.value.title;
+  }
 });
 
 // debounced saving
 watchDebounced(
   title,
   () => {
-    if (title.value !== selectedTask.value.title) {
+    if (selectedTask.value && title.value !== selectedTask.value.title) {
       saveTitle();
     }
   },
