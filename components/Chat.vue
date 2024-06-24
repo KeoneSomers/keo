@@ -42,7 +42,7 @@ watchEffect(async () => {
 });
 
 const sendMessage = async () => {
-  if (newMessage.value.length > 0) {
+  if (newMessage.value.length > 0 && !loading.value) {
     console.log("sending message");
     const msgNew = newMessage.value;
     newMessage.value = "";
@@ -124,6 +124,7 @@ const sendMessage = async () => {
       <UInput
         v-model="newMessage"
         @keypress.enter="sendMessage"
+        :disabled="loading"
         placeholder="Chat..."
         size="xl"
         icon="i-heroicons-paper-airplane"
