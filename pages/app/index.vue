@@ -121,8 +121,6 @@ const throttledFnCreateNewTask = useThrottleFn(() => {
 }, 1500);
 
 const createNewTask = async () => {
-  console.log("Hit");
-  return;
   // create gpt chat thread for the task
   const { data: thread } = await useFetch("/api/createChatThread");
   console.log(thread.value.id);
