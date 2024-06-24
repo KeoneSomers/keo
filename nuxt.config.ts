@@ -12,13 +12,7 @@ export default defineNuxtConfig({
     preference: "dark",
   },
   supabase: {
-    redirectOptions: {
-      login: "/login",
-      callback: "/confirm",
-      include: undefined,
-      exclude: ["/signup", "/"],
-      cookieRedirect: false,
-    },
+    redirect: false,
     clientOptions: {
       auth: {
         persistSession: true,
