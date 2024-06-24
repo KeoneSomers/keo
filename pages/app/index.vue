@@ -293,7 +293,7 @@ const deleteTask = async () => {
         <div
           v-for="task in filteredAndSortedTasks"
           :key="task.id"
-          @click="taskId !== selectedTask.id && selectTask(task.id)"
+          @click="task.id !== selectedTask.id && selectTask(task.id)"
           class="p-2 mx-4 my-1 select-none text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
