@@ -217,7 +217,14 @@ const selectTask = async (taskId) => {
       </div>
 
       <!-- account dropdown -->
-      <div class="bg-zinc-900 rounded-lg m-4">
+      <div class="m-4">
+        <!-- Keo Plus Promo -->
+        <div
+          class="bg-indigo-900/50 rounded-lg mb-2 p-4 cursor-pointer hover:bg-indigo-900/75"
+        >
+          <p class="text-sm">Upgrade to Keo Plus!</p>
+          <p class="opacity-50 text-xs">Coming Soon...</p>
+        </div>
         <UDropdown
           :items="accountDropdownItems"
           :popper="{ placement: 'bottom-start' }"

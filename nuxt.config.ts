@@ -19,6 +19,11 @@ export default defineNuxtConfig({
       exclude: ["/signup", "/"],
       cookieRedirect: false,
     },
+    clientOptions: {
+      auth: {
+        persistSession: true,
+      },
+    },
   },
   runtimeConfig: {
     // Private keys are only available on the server
