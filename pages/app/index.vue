@@ -1,5 +1,5 @@
 <script setup>
-import { watchDebounced } from "@vueuse/core";
+import { watchDebounced, useThrottleFn } from "@vueuse/core";
 
 const searchQuery = ref("");
 
@@ -115,7 +115,14 @@ const filteredAndSortedTasks = computed(() => {
   return filteredItems;
 });
 
+const throttledFnCreateNewTask = useThrottleFn(() => {
+  // do something, it will be called at most 1 time per 1.5 seconds
+  createNewTask();
+}, 1500);
+
 const createNewTask = async () => {
+  console.log("Hit");
+  return;
   // create gpt chat thread for the task
   const { data: thread } = await useFetch("/api/createChatThread");
   console.log(thread.value.id);
@@ -176,7 +183,9 @@ const selectTask = async (taskId) => {
       </div>
 
       <div class="p-4">
-        <UButton @click="createNewTask" block color="black">New Task</UButton>
+        <UButton @click="throttledFnCreateNewTask" block color="black"
+          >New Task</UButton
+        >
       </div>
       <!-- search bar -->
       <div class="border-zinc-700">
@@ -223,7 +232,7 @@ const selectTask = async (taskId) => {
           class="bg-indigo-900/50 rounded-lg mb-2 p-4 cursor-pointer hover:bg-indigo-900/75"
         >
           <p class="text-sm">Upgrade to Keo Plus!</p>
-          <p class="opacity-50 text-xs">Coming Soon...</p>
+          <p class="opacity-50 text-xs">Coming soon...</p>
         </div>
         <UDropdown
           :items="accountDropdownItems"
