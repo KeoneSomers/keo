@@ -87,6 +87,7 @@ export default {
 <style>
 /* Dropdown menu */
 .dropdown-menu {
+  max-height: 16rem;
   background: black;
   border: 1px solid black;
   border-radius: 0.7rem;

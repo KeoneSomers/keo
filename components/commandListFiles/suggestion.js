@@ -25,7 +25,54 @@ export default {
         },
       },
       {
-        title: "Heading 1",
+        title: "Code",
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setMark("code").run();
+        },
+      },
+      {
+        title: "Paragraph",
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setMark("paragraph").run();
+        },
+      },
+      {
+        title: "BulletList",
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setMark("bulletList").run();
+        },
+      },
+      {
+        title: "NumberedList",
+        command: ({ editor, range }) => {
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setMark("orderedList")
+            .run();
+        },
+      },
+      {
+        title: "CodeBlock",
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+        },
+      },
+      {
+        title: "BlockQuote",
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).toggleBlockquote().run();
+        },
+      },
+      {
+        title: "HR",
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+        },
+      },
+      {
+        title: "H1",
         command: ({ editor, range }) => {
           editor
             .chain()
@@ -36,7 +83,7 @@ export default {
         },
       },
       {
-        title: "Heading 2",
+        title: "H2",
         command: ({ editor, range }) => {
           editor
             .chain()
@@ -47,7 +94,7 @@ export default {
         },
       },
       {
-        title: "Heading 3",
+        title: "H3",
         command: ({ editor, range }) => {
           editor
             .chain()
@@ -58,7 +105,7 @@ export default {
         },
       },
       {
-        title: "Heading 4",
+        title: "H4",
         command: ({ editor, range }) => {
           editor
             .chain()
@@ -69,7 +116,7 @@ export default {
         },
       },
       {
-        title: "Heading 5",
+        title: "H5",
         command: ({ editor, range }) => {
           editor
             .chain()
@@ -80,7 +127,7 @@ export default {
         },
       },
       {
-        title: "Heading 6",
+        title: "H6",
         command: ({ editor, range }) => {
           editor
             .chain()
