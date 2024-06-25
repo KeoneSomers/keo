@@ -1,4 +1,6 @@
 <script setup>
+import Commands from "./commandListFiles/commands.js";
+import suggestion from "./commandListFiles/suggestion.js";
 import { useDebounceFn } from "@vueuse/core";
 import TurndownService from "turndown";
 import {
@@ -33,7 +35,12 @@ const notesMarkdown = useState("notesMarkdown", () => "");
 const editor = useEditor({
   content: selectedTask.value.notes ? selectedTask.value.notes : "",
   autofocus: true,
-  extensions: [TiptapStarterKit],
+  extensions: [
+    TiptapStarterKit,
+    Commands.configure({
+      suggestion,
+    }),
+  ],
   editorProps: {
     attributes: {
       class:

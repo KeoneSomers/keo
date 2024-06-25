@@ -13,11 +13,13 @@
     "@nuxt/ui": "^2.17.0",
     "@nuxtjs/supabase": "^1.2.2",
     "@remixicon/vue": "^4.2.0",
+    "@tiptap/suggestion": "^2.4.0",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
     "nuxt": "^3.12.2",
     "nuxt-tiptap-editor": "^1.1.2",
     "openai": "^4.52.0",
+    "tippy.js": "^6.3.7",
     "turndown": "^7.2.0",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
