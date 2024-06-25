@@ -158,6 +158,10 @@ const createNewTask = async () => {
 };
 
 const selectTask = async (taskId) => {
+  if (selectedTask.value && taskId === selectedTask.value.id) {
+    return;
+  }
+
   const { data, error } = await supabase
     .from("tasks")
     .select()
@@ -297,7 +301,7 @@ const deleteTask = async () => {
         <div
           v-for="task in filteredAndSortedTasks"
           :key="task.id"
-          @click="task.id !== selectedTask.id && selectTask(task.id)"
+          @click="selectTask(task.id)"
           class="p-2 mx-4 my-1 select-none text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
           :class="[
             {
