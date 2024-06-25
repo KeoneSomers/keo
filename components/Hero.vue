@@ -21,12 +21,12 @@ const mobileMenuOpen = ref(false);
       >
         <div class="flex lg:flex-1">
           <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
-            <img
+            <span class="uppercase font-bold text-xl">Keo</span>
+            <!-- <img
               class="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
               alt=""
-            />
+            /> -->
           </a>
         </div>
         <div class="flex lg:hidden">
@@ -65,12 +65,12 @@ const mobileMenuOpen = ref(false);
         >
           <div class="flex items-center justify-between">
             <a href="#" class="-m-1.5 p-1.5">
-              <span class="sr-only">Your Company</span>
-              <img
+              <span class="sr-only">Keo.dev</span>
+              <!-- <img
                 class="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                 alt=""
-              />
+              /> -->
             </a>
             <button
               type="button"
@@ -140,7 +140,7 @@ const mobileMenuOpen = ref(false);
             <h1
               class="text-4xl font-bold tracking-tight text-white sm:text-6xl"
             >
-              An AI Assistant for each of your developer tasks
+              An AI Assistant for each of your work tasks
             </h1>
             <p class="mt-6 text-lg leading-8 text-gray-300">
               Stay organised with Keo! Each task you create provides a space to
@@ -159,13 +159,13 @@ const mobileMenuOpen = ref(false);
               >
             </div>
           </div>
-          <!-- <img
-            src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+          <img
+            src="/public/hero.webp"
             alt="App screenshot"
             width="2432"
             height="1442"
             class="mt-16 rounded-md bg-white/5 shadow-2xl ring-1 ring-white/10 sm:mt-24"
-          /> -->
+          />
         </div>
       </div>
       <div
