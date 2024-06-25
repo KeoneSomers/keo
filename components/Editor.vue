@@ -1,4 +1,5 @@
 <script setup>
+import Placeholder from "@tiptap/extension-placeholder";
 import Commands from "./commandListFiles/commands.js";
 import suggestion from "./commandListFiles/suggestion.js";
 import { useDebounceFn } from "@vueuse/core";
@@ -39,6 +40,18 @@ const editor = useEditor({
     TiptapStarterKit,
     Commands.configure({
       suggestion,
+    }),
+    Placeholder.configure({
+      // Use a placeholder:
+      placeholder: "Write something, or press '/' for commands…",
+      // Use different placeholders depending on the node type:
+      // placeholder: ({ node }) => {
+      //   if (node.type.name === 'heading') {
+      //     return 'What’s the title?'
+      //   }
+
+      //   return 'Can you add some further context?'
+      // },
     }),
   ],
   editorProps: {
@@ -248,3 +261,23 @@ const saveNotes = async () => {
     </div>
   </div>
 </template>
+
+<style>
+/* Placeholder (at the top) */
+p.is-editor-empty:first-child::before {
+  color: grey;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Placeholder (on every new line) */
+.is-empty::before {
+  color: grey;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+</style>
