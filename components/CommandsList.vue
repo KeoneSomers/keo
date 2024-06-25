@@ -84,7 +84,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* Dropdown menu */
 .dropdown-menu {
   max-height: 16rem;
