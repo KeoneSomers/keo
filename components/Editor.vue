@@ -90,8 +90,8 @@ const saveNotes = async () => {
 
 <template>
   <div class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-auto">
-    <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1 sticky top-0">
-      <!-- <button
+    <!-- <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1 sticky top-0"> -->
+    <!-- <button
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
         class="m-1 bg-zinc-800 rounded p-1 text-xs"
@@ -224,7 +224,7 @@ const saveNotes = async () => {
       >
         <RiSpace size="16px" />
       </button> -->
-      <!-- <button
+    <!-- <button
         @click="editor.chain().focus().undo().run()"
         class="m-1 bg-zinc-800 rounded p-1 text-xs"
         :class="{ 'opacity-50': !editor.can().chain().focus().undo().run() }"
@@ -240,7 +240,7 @@ const saveNotes = async () => {
       >
         <RiArrowGoForwardLine size="16px" />
       </button> -->
-    </div>
+    <!-- </div> -->
     <div class="flex flex-1">
       <div class="flex-1">
         <TiptapEditorContent :editor="editor" class="h-full" />
