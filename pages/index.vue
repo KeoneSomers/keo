@@ -7,5 +7,7 @@ definePageMeta({
 <template>
   <div>
     <Hero />
+    <Features />
+    <FooterSection />
   </div>
 </template>
