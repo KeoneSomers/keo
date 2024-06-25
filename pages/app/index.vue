@@ -1,5 +1,5 @@
 <script setup>
-import { watchDebounced, useThrottleFn } from "@vueuse/core";
+import { watchDebounced, useThrottleFn, useDebounceFn } from "@vueuse/core";
 
 definePageMeta({
   middleware: ["require-auth"],
@@ -11,6 +11,7 @@ const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
 const title = ref("");
+const isCompleted = ref(true);
 
 const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
@@ -18,6 +19,7 @@ const selectedTask = useState("selectedTask", () => null);
 watchEffect(async () => {
   if (selectedTask.value) {
     title.value = selectedTask.value.title;
+    isCompleted.value = selectedTask.value.is_completed;
   }
 });
 
@@ -77,7 +79,7 @@ const accountDropdownItems = [
 const getTasks = async () => {
   const { data, error } = await supabase
     .from("tasks")
-    .select("id, title")
+    .select("id, title, is_completed")
     .eq("created_by", user.value.id)
     .order("id", { ascending: false });
 
@@ -274,6 +276,42 @@ const deleteTask = async () => {
   selectedTask.value = null;
   isOpenDeleteConfirmation.value = false;
 };
+
+// debounced saving isCompleted value
+watchDebounced(
+  isCompleted,
+  () => {
+    if (
+      selectedTask.value &&
+      isCompleted.value !== selectedTask.value.is_completed
+    ) {
+      saveIsCompleted();
+    }
+  },
+  { debounce: 1000, maxWait: 5000 }
+);
+
+const saveIsCompleted = async () => {
+  console.log("Saving isCompleted");
+  const { error } = await supabase
+    .from("tasks")
+    .update({ is_completed: isCompleted.value })
+    .eq("id", selectedTask.value.id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  // update local state
+  selectedTask.value.is_completed = isCompleted.value;
+
+  // For the isCompleted - also need to update it in the sidebar list
+  const index = tasks.value.findIndex(
+    (item) => item.id === selectedTask.value.id
+  );
+  tasks.value[index].is_completed = isCompleted.value;
+};
 </script>
 
 <template>
@@ -317,6 +355,7 @@ const deleteTask = async () => {
                 selectedTask === null ||
                 (selectedTask !== null && task.id !== selectedTask.id),
             },
+            { 'line-through': task.is_completed },
           ]"
         >
           <span>{{
@@ -356,6 +395,17 @@ const deleteTask = async () => {
         class="flex flex-col flex-1 pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-zinc-900"
       >
         <div class="p-1 border-b dark:border-zinc-800 flex items-center">
+          <div class="pl-3 flex items-center">
+            <UTooltip
+              :text="
+                isCompleted === false
+                  ? 'Mark as complete'
+                  : 'Mark as incomplete'
+              "
+            >
+              <UCheckbox v-model="isCompleted" />
+            </UTooltip>
+          </div>
           <div class="flex-1">
             <UInput
               v-model="title"
@@ -363,6 +413,7 @@ const deleteTask = async () => {
               size="xl"
               variant="none"
               class="p-0.5"
+              :class="{ 'line-through': isCompleted }"
             />
           </div>
           <div class="pr-2">
@@ -409,11 +460,12 @@ const deleteTask = async () => {
             />
           </div>
           <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-            <DialogTitle
+            <div
               as="h3"
               class="text-base font-semibold leading-6 text-zinc-100"
-              >Clear chat</DialogTitle
             >
+              Clear chat
+            </div>
             <div class="mt-2">
               <p class="text-sm text-gray-400">
                 Are you sure you want to clear the chat history for this task?
@@ -449,11 +501,12 @@ const deleteTask = async () => {
             />
           </div>
           <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-            <DialogTitle
+            <div
               as="h3"
               class="text-base font-semibold leading-6 text-zinc-100"
-              >Delete Task</DialogTitle
             >
+              Delete Task
+            </div>
             <div class="mt-2">
               <p class="text-sm text-gray-400">
                 Are you sure you want to delete this task? All of it's data will
