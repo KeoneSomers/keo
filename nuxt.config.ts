@@ -22,4 +22,12 @@ export default defineNuxtConfig({
       publicApiKey: process.env.PUBLIC_API_KEY,
     },
   },
+  app: {
+    head: {
+      title: "Keo",
+      htmlAttrs: {
+        lang: "en",
+      },
+    },
+  },
 });
