@@ -1,6 +1,10 @@
 <script setup>
 import { watchDebounced, useThrottleFn } from "@vueuse/core";
 
+definePageMeta({
+  middleware: ["require-auth"],
+});
+
 const searchQuery = ref("");
 
 const supabase = useSupabaseClient();

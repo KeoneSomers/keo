@@ -12,19 +12,7 @@ export default defineNuxtConfig({
     preference: "dark",
   },
   supabase: {
-    redirect: true,
-    redirectOptions: {
-      login: "/login",
-      callback: "/confirm",
-      include: undefined,
-      exclude: ["/signup", "/"],
-      cookieRedirect: false,
-    },
-    clientOptions: {
-      auth: {
-        persistSession: true,
-      },
-    },
+    redirect: false,
   },
   runtimeConfig: {
     // Private keys are only available on the server

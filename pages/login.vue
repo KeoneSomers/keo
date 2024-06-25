@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+  middleware: ["require-no-auth"],
+});
+
 const supabase = useSupabaseClient();
 
 const state = reactive({
