@@ -284,8 +284,7 @@ watchDebounced(
   () => {
     if (
       selectedTask.value &&
-      ((isCompleted.value === true) !== selectedTask.value.completed_at) !==
-        null
+      isCompleted.value !== (selectedTask.value.completed_at !== null)
     ) {
       saveIsCompleted();
     }
