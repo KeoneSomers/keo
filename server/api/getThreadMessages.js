@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     );
 
     // Log the response for debugging
-    console.log("API Response:", threadMessages.data);
+//    console.log("API Response:", threadMessages.data);
 
     // Return the messages
     return threadMessages.data;
