@@ -14,6 +14,7 @@ const user = useSupabaseUser();
 const title = ref("");
 const isCompleted = ref(false);
 
+const clearChatLoading = ref(false);
 const deleteLoading = ref(false);
 
 const tasks = useState("tasks", () => []);
@@ -213,6 +214,7 @@ const taskOptions = [
 ];
 
 const clearChat = async () => {
+  clearChatLoading.value = true;
   console.log("here");
   // create a new thread
   const { data: thread } = await useFetch("/api/openai/threads/create");
@@ -222,6 +224,7 @@ const clearChat = async () => {
     console.log(
       "No new thread was created and returned. Aborting refresh thread."
     );
+    clearChatLoading.value = false;
     return;
   }
 
@@ -244,10 +247,12 @@ const clearChat = async () => {
 
   if (!deleted) {
     console.log("Error deleting old chat thread, aborting task deletion.");
+    clearChatLoading.value = false;
     return;
   }
 
   isOpenClearConfirmation.value = false;
+  clearChatLoading.value = false;
 };
 
 const deleteTask = async () => {
@@ -491,7 +496,12 @@ const saveIsCompleted = async () => {
           </div>
         </div>
         <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-          <UButton color="red" class="ml-3" @click="clearChat">
+          <UButton
+            :loading="clearChatLoading"
+            color="red"
+            class="ml-3"
+            @click="clearChat"
+          >
             Clear Chat
           </UButton>
           <UButton
