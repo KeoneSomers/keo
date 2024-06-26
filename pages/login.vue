@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
-  middleware: ["require-no-auth"],
+  middleware: ["require-anonymous"],
 });
 
 const supabase = useSupabaseClient();
@@ -10,7 +10,7 @@ const state = reactive({
   password: "",
 });
 
-const errors = ref([]);
+const errors = ref<string[]>([]);
 
 const login = async () => {
   errors.value = [];
@@ -28,13 +28,13 @@ const login = async () => {
     return;
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email: state.email,
     password: state.password,
   });
 
   if (error) {
-    errors.value.push(error);
+    errors.value.push(error.message);
     return;
   }
 };

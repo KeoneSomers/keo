@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
-  middleware: ["require-no-auth"],
+  middleware: ["require-anonymous"],
 });
 
 const supabase = useSupabaseClient();
@@ -11,7 +11,7 @@ const state = reactive({
   passwordConfirm: "",
 });
 
-const errors = ref([]);
+const errors = ref<string[]>([]);
 
 const signUp = async () => {
   errors.value = [];
@@ -41,7 +41,7 @@ const signUp = async () => {
   });
 
   if (error) {
-    errors.value.push(error);
+    errors.value.push(error.message);
     return;
   }
 };

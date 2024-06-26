@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-  middleware: ["require-no-auth"],
+  middleware: ["require-anonymous"],
 });
 </script>
 
