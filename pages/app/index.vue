@@ -1,5 +1,6 @@
 <script setup>
-import { watchDebounced, useThrottleFn, useDebounceFn } from "@vueuse/core";
+// import { DateTime as Luxon } from "luxon";
+import { watchDebounced, useThrottleFn } from "@vueuse/core";
 
 definePageMeta({
   middleware: ["require-auth"],
@@ -19,7 +20,7 @@ const selectedTask = useState("selectedTask", () => null);
 watchEffect(async () => {
   if (selectedTask.value) {
     title.value = selectedTask.value.title;
-    isCompleted.value = selectedTask.value.is_completed;
+    isCompleted.value = selectedTask.value.completed_at !== null;
   }
 });
 
@@ -79,7 +80,7 @@ const accountDropdownItems = [
 const getTasks = async () => {
   const { data, error } = await supabase
     .from("tasks")
-    .select("id, title, is_completed")
+    .select("id, title, completed_at")
     .eq("created_by", user.value.id)
     .order("id", { ascending: false });
 
@@ -283,7 +284,8 @@ watchDebounced(
   () => {
     if (
       selectedTask.value &&
-      isCompleted.value !== selectedTask.value.is_completed
+      ((isCompleted.value === true) !== selectedTask.value.completed_at) !==
+        null
     ) {
       saveIsCompleted();
     }
@@ -293,9 +295,15 @@ watchDebounced(
 
 const saveIsCompleted = async () => {
   console.log("Saving isCompleted");
+
+  const currentDate = new Date();
+  const currentDatetimeZ = currentDate.toISOString();
+
   const { error } = await supabase
     .from("tasks")
-    .update({ is_completed: isCompleted.value })
+    .update({
+      completed_at: isCompleted.value === true ? currentDatetimeZ : null,
+    })
     .eq("id", selectedTask.value.id);
 
   if (error) {
@@ -304,13 +312,13 @@ const saveIsCompleted = async () => {
   }
 
   // update local state
-  selectedTask.value.is_completed = isCompleted.value;
+  selectedTask.value.completed_at = currentDatetimeZ;
 
   // For the isCompleted - also need to update it in the sidebar list
   const index = tasks.value.findIndex(
     (item) => item.id === selectedTask.value.id
   );
-  tasks.value[index].is_completed = isCompleted.value;
+  tasks.value[index].completed_at = currentDatetimeZ;
 };
 </script>
 
@@ -355,7 +363,7 @@ const saveIsCompleted = async () => {
                 selectedTask === null ||
                 (selectedTask !== null && task.id !== selectedTask.id),
             },
-            { 'line-through': task.is_completed },
+            { 'line-through': task.completed_at !== null },
           ]"
         >
           <span>{{

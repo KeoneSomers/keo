@@ -1,21 +1,21 @@
 <script setup>
 const features = [
   {
-    name: "Unlimited inboxes",
+    name: "Tasks",
     description:
       "Non quo aperiam repellendus quas est est. Eos aut dolore aut ut sit nesciunt. Ex tempora quia. Sit nobis consequatur dolores incidunt.",
     href: "#",
     icon: "i-heroicons-arrow-left-16-solid",
   },
   {
-    name: "Manage team members",
+    name: "Notes",
     description:
       "Vero eum voluptatem aliquid nostrum voluptatem. Vitae esse natus. Earum nihil deserunt eos quasi cupiditate. A inventore et molestiae natus.",
     href: "#",
     icon: "i-heroicons-arrow-left-16-solid",
   },
   {
-    name: "Spam report",
+    name: "Chat",
     description:
       "Et quod quaerat dolorem quaerat architecto aliquam accusantium. Ex adipisci et doloremque autem quia quam. Quis eos molestiae at iure impedit.",
     href: "#",
