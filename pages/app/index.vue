@@ -12,7 +12,7 @@ const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
 const title = ref("");
-const isCompleted = ref(true);
+const isCompleted = ref(false);
 
 const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
@@ -311,13 +311,15 @@ const saveIsCompleted = async () => {
   }
 
   // update local state
-  selectedTask.value.completed_at = currentDatetimeZ;
+  selectedTask.value.completed_at =
+    isCompleted.value === true ? currentDatetimeZ : null;
 
   // For the isCompleted - also need to update it in the sidebar list
   const index = tasks.value.findIndex(
     (item) => item.id === selectedTask.value.id
   );
-  tasks.value[index].completed_at = currentDatetimeZ;
+  tasks.value[index].completed_at =
+    isCompleted.value === true ? currentDatetimeZ : null;
 };
 </script>
 
