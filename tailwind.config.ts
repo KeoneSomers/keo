@@ -1,0 +1,1 @@
+// Added this config file so that tailwind auotcomplete will work in Fleet IDE.

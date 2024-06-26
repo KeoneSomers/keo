@@ -35,7 +35,7 @@ const signUp = async () => {
     return;
   }
 
-  const { data, error } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email: state.email,
     password: state.password,
   });

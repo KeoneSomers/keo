@@ -9,7 +9,5 @@ export default defineEventHandler(async (event) => {
     apiKey: config.openaiApiKey,
   });
 
-  const thread = await openai.beta.threads.del(thread_id);
-
-  return thread;
+  return await openai.beta.threads.del(thread_id);
 });

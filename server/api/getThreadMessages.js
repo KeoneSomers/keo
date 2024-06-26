@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
   });
 
   try {
-    // Make the API request
     const threadMessages = await openai.beta.threads.messages.list(
       query.thread_id,
       {

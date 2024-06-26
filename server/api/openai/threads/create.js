@@ -7,11 +7,5 @@ export default defineEventHandler(async (event) => {
     apiKey: config.openaiApiKey,
   });
 
-  const assistant = await openai.beta.assistants.retrieve(
-    "asst_GhthCVssiAKe1qZEh1n3fbgZ"
-  );
-
-  const thread = await openai.beta.threads.create();
-
-  return thread;
+  return await openai.beta.threads.create();
 });
