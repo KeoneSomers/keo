@@ -14,6 +14,8 @@ const user = useSupabaseUser();
 const title = ref("");
 const isCompleted = ref(false);
 
+const deleteLoading = ref(false);
+
 const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
 
@@ -250,6 +252,7 @@ const clearChat = async () => {
 
 const deleteTask = async () => {
   // Delete the Chat thread and the task
+  deleteLoading.value = true;
   const { id, object, deleted } = await $fetch("/api/openai/threads/delete", {
     method: "post",
     body: {
@@ -259,6 +262,7 @@ const deleteTask = async () => {
 
   if (!deleted) {
     console.log("Error deleting chat thread, aborting task deletion.");
+    deleteLoading.value = false;
     return;
   }
 
@@ -269,6 +273,7 @@ const deleteTask = async () => {
 
   if (error) {
     console.log(error.message);
+    deleteLoading.value = false;
     return;
   }
 
@@ -276,6 +281,7 @@ const deleteTask = async () => {
   tasks.value = tasks.value.filter((item) => item.id !== selectedTask.value.id);
   selectedTask.value = null;
   isOpenDeleteConfirmation.value = false;
+  deleteLoading.value = false;
 };
 
 // debounced saving isCompleted value
@@ -525,7 +531,12 @@ const saveIsCompleted = async () => {
           </div>
         </div>
         <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-          <UButton color="red" class="ml-3" @click="deleteTask">
+          <UButton
+            :loading="deleteLoading"
+            color="red"
+            class="ml-3"
+            @click="deleteTask"
+          >
             Delete Task
           </UButton>
           <UButton
