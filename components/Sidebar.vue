@@ -193,7 +193,7 @@ const selectTask = async (taskId) => {
         <div class="m-4">
             <!-- Keo Plus Promo -->
             <div
-                class="bg-indigo-500/30 dark:bg-indigo-900/50 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75"
+                class="bg-gradient-to-r from-indigo-200 to-yellow-100 dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75"
             >
                 <p class="text-sm">Upgrade to Keo Plus!</p>
                 <p class="opacity-50 text-xs">Coming soon...</p>

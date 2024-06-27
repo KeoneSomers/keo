@@ -138,7 +138,7 @@ const sendMessage = async () => {
                 </div>
             </div>
         </div>
-        <div class="sticky bottom-0 left-0 bc-zinc-100 dark:bg-zinc-900 p-4">
+        <div class="sticky bottom-0 left-0 bc-zinc-100 dark:bg-zinc-900 px-4 pt-2">
             <UInput
                 v-model="newMessage"
                 @keypress.enter="sendMessage"
@@ -148,6 +148,12 @@ const sendMessage = async () => {
                 icon="i-heroicons-paper-airplane"
                 :trailing="true"
             />
+            <div class=" flex justify-center text-xs opacity-70 py-2">
+                <div class="flex items-center">
+                    <UIcon name="i-heroicons-lock-closed-16-solid" class="text-green-800 dark:text-green-500"/>
+                    <small>This chat is private and will not be used for ai model training.</small>
+                </div>
+            </div>
         </div>
     </div>
 </template>
