@@ -167,10 +167,10 @@ const selectTask = async (taskId) => {
                 v-for="task in filteredAndSortedTasks"
                 :key="task.id"
                 @click="handleSelectTask(task.id)"
-                class="p-2 mx-4 my-1 select-none text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-800 cursor-pointer truncate"
+                class="p-2 mx-4 my-1 select-none text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-200 dark:hover:bg-zinc-800 cursor-pointer truncate"
                 :class="[
             {
-              'bg-zinc-900':
+              'bg-zinc-100 dark:bg-zinc-900':
                 selectedTask !== null && task.id === selectedTask.id,
             },
             {
@@ -193,23 +193,27 @@ const selectTask = async (taskId) => {
         <div class="m-4">
             <!-- Keo Plus Promo -->
             <div
-                class="bg-indigo-900/50 rounded-lg mb-2 p-4 cursor-pointer hover:bg-indigo-900/75"
+                class="bg-indigo-500/30 dark:bg-indigo-900/50 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75"
             >
                 <p class="text-sm">Upgrade to Keo Plus!</p>
                 <p class="opacity-50 text-xs">Coming soon...</p>
             </div>
-            <UDropdown
-                :items="accountDropdownItems"
-                :popper="{ placement: 'bottom-start' }"
-            >
-                <UButton
-                    color="white"
-                    :label="user.email"
-                    trailing-icon="i-heroicons-chevron-down-20-solid"
-                    block
-                    truncate
-                />
-            </UDropdown>
+            <div class="flex space-x-1">
+                <UDropdown
+                    :items="accountDropdownItems"
+                    :popper="{ placement: 'bottom-start' }"
+                >
+                    <UButton
+                        color="white"
+                        :label="user.email"
+                        trailing-icon="i-heroicons-chevron-down-20-solid"
+                        block
+                        truncate
+                    />
+                </UDropdown>
+                <ThemeToggle/>
+            </div>
+
         </div>
     </div>
 </template>

@@ -203,73 +203,75 @@ const saveIsCompleted = async () => {
 </script>
 
 <template>
-    <div v-if="user" class="flex">
+    <div v-if="user">
+        <div class="flex">
 
-        <!-- Sidebar -->
-        <div class="w-64">
-            <Sidebar/>
-        </div>
+            <!-- Sidebar -->
+            <div class="w-64">
+                <Sidebar/>
+            </div>
 
-        <!-- Main -->
-        <div class="p-2 pl-0 h-screen flex-1">
-            <div
-                v-if="selectedTask"
-                class="flex flex-col flex-1 pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-zinc-900"
-            >
-                <div class="p-1 border-b dark:border-zinc-800 flex items-center">
-                    <div class="pl-3 flex items-center">
-                        <UTooltip
-                            :text="
+            <!-- Main -->
+            <div class="p-2 pl-0 h-screen flex-1">
+                <div
+                    v-if="selectedTask"
+                    class="flex flex-col flex-1 pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-zinc-50 dark:bg-zinc-900"
+                >
+                    <div class="p-1 border-b dark:border-zinc-800 flex items-center">
+                        <div class="pl-3 flex items-center">
+                            <UTooltip
+                                :text="
                 isCompleted === false
                   ? 'Mark as complete'
                   : 'Mark as incomplete'
               "
-                        >
-                            <UCheckbox v-model="isCompleted"/>
-                        </UTooltip>
-                    </div>
-                    <div class="flex-1">
-                        <UInput
-                            v-model="title"
-                            placeholder="Give this task a name..."
-                            size="xl"
-                            variant="none"
-                            class="p-0.5"
-                            :class="{ 'line-through': isCompleted }"
-                        />
-                    </div>
-                    <div class="pr-2">
-                        <UDropdown
-                            :items="taskOptions"
-                            :popper="{ placement: 'bottom-start' }"
-                        >
-                            <UButton
-                                color="white"
-                                label="Options"
-                                trailing-icon="i-heroicons-chevron-down-20-solid"
+                            >
+                                <UCheckbox v-model="isCompleted"/>
+                            </UTooltip>
+                        </div>
+                        <div class="flex-1">
+                            <UInput
+                                v-model="title"
+                                placeholder="Give this task a name..."
+                                size="xl"
+                                variant="none"
+                                class="p-0.5"
+                                :class="{ 'line-through': isCompleted }"
                             />
-                        </UDropdown>
+                        </div>
+                        <div class="pr-2">
+                            <UDropdown
+                                :items="taskOptions"
+                                :popper="{ placement: 'bottom-start' }"
+                            >
+                                <UButton
+                                    color="white"
+                                    label="Options"
+                                    trailing-icon="i-heroicons-chevron-down-20-solid"
+                                />
+                            </UDropdown>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div
+                            class="flex flex-col flex-1 dark:border-zinc-800 border-r"
+                        >
+                            <Editor/>
+                        </div>
+                        <div class="flex-1">
+                            <Chat/>
+                        </div>
                     </div>
                 </div>
-                <div class="flex">
-                    <div
-                        class="flex flex-col flex-1 dark:border-zinc-800 border-r bg-zinc-900"
-                    >
-                        <Editor/>
-                    </div>
-                    <div class="flex-1 bg-zinc-900">
-                        <Chat/>
-                    </div>
+                <div
+                    v-else
+                    class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
+                >
+                    <span class="opacity-45">No task selected.</span>
                 </div>
             </div>
-            <div
-                v-else
-                class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
-            >
-                <span class="opacity-45">No task selected.</span>
-            </div>
-        </div>
 
+        </div>
         <!-- Modal: Clear Chat-->
         <UModal v-model="isOpenClearConfirmation">
             <div class="p-4">
@@ -283,12 +285,11 @@ const saveIsCompleted = async () => {
                         />
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <div
-                            as="h3"
-                            class="text-base font-semibold leading-6 text-zinc-100"
+                        <h3
+                            class="text-base font-semibold leading-6 text-zinc-800 dark:text-zinc-100"
                         >
                             Clear chat
-                        </div>
+                        </h3>
                         <div class="mt-2">
                             <p class="text-sm text-gray-400">
                                 Are you sure you want to clear the chat history for this task?
@@ -331,12 +332,11 @@ const saveIsCompleted = async () => {
                         />
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <div
-                            as="h3"
-                            class="text-base font-semibold leading-6 text-zinc-100"
+                        <h3
+                            class="text-base font-semibold leading-6 text-zinc-800 dark:text-zinc-100"
                         >
                             Delete Task
-                        </div>
+                        </h3>
                         <div class="mt-2">
                             <p class="text-sm text-gray-400">
                                 Are you sure you want to delete this task? All of it's data will
@@ -364,5 +364,6 @@ const saveIsCompleted = async () => {
                 </div>
             </div>
         </UModal>
+
     </div>
 </template>

@@ -2,7 +2,7 @@
 import TurndownService from "turndown";
 import {useResizeObserver} from "@vueuse/core";
 
-var turndownService = new TurndownService({headingStyle: "atx"});
+const turndownService = new TurndownService({headingStyle: "atx"});
 
 const scrollContainer = ref(null);
 const resize = ref(null);
@@ -106,8 +106,8 @@ const sendMessage = async () => {
           <span
               class="py-2 px-3 rounded-lg"
               :class="[
-              { 'bg-zinc-800 mr-6': message.role === 'assistant' },
-              { 'bg-indigo-800 ml-6': message.role === 'user' },
+              { 'bg-zinc-200 dark:bg-zinc-800 mr-6': message.role === 'assistant' },
+              { 'bg-indigo-500 text-white dark:text-white dark:bg-indigo-800 ml-6': message.role === 'user' },
             ]"
           >
             <span>{{ message.content[0].text.value }}</span>
@@ -124,7 +124,7 @@ const sendMessage = async () => {
             <div>
                 <div v-if="loading" class="flex">
                     <div
-                        class="flex flex-shrink space-x-1 justify-start items-center bg-zinc-800 p-2 rounded-lg"
+                        class="flex flex-shrink space-x-1 justify-start items-center bg-zinc-200 dark:bg-zinc-800 p-2 rounded-lg"
                     >
                         <span class="sr-only">Loading...</span>
                         <div
@@ -138,7 +138,7 @@ const sendMessage = async () => {
                 </div>
             </div>
         </div>
-        <div class="sticky bottom-0 left-0 bg-zinc-900 p-4">
+        <div class="sticky bottom-0 left-0 bc-zinc-100 dark:bg-zinc-900 p-4">
             <UInput
                 v-model="newMessage"
                 @keypress.enter="sendMessage"

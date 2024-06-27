@@ -105,11 +105,11 @@ const saveNotes = async () => {
 
 <template>
     <div class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-auto">
-        <div v-if="editor" class="bg-zinc-950/30 m-2 rounded p-1 sticky top-0">
+        <div v-if="editor" class="bg-zinc-200 dark:bg-zinc-950/30 m-2 rounded p-1 sticky top-0">
             <button
                 @click="editor.chain().focus().toggleBold().run()"
                 :disabled="!editor.can().chain().focus().toggleBold().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('bold') }"
             >
                 <RiBold size="16px"/>
@@ -117,7 +117,7 @@ const saveNotes = async () => {
             <button
                 @click="editor.chain().focus().toggleItalic().run()"
                 :disabled="!editor.can().chain().focus().toggleItalic().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('italic') }"
             >
                 <RiItalic size="16px"/>
@@ -125,7 +125,7 @@ const saveNotes = async () => {
             <button
                 @click="editor.chain().focus().toggleStrike().run()"
                 :disabled="!editor.can().chain().focus().toggleStrike().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('strike') }"
             >
                 <RiStrikethrough size="16px"/>
@@ -133,115 +133,115 @@ const saveNotes = async () => {
             <button
                 @click="editor.chain().focus().toggleCode().run()"
                 :disabled="!editor.can().chain().focus().toggleCode().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('code') }"
             >
                 <RiCodeLine size="16px"/>
             </button>
             <!-- <button
               @click="editor.chain().focus().unsetAllMarks().run()"
-              class="m-1 bg-zinc-800 rounded p-1 text-xs"
+              class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
             >
               clear marks
             </button>
             <button
               @click="editor.chain().focus().clearNodes().run()"
-              class="m-1 bg-zinc-800 rounded p-1 text-xs"
+              class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
             >
               clear nodes
             </button> -->
             <button
                 @click="editor.chain().focus().setParagraph().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('paragraph') }"
             >
                 <RiParagraph size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
             >
                 <RiH1 size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
             >
                 <RiH2 size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
             >
                 <RiH3 size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
             >
                 <RiH4 size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
             >
                 <RiH5 size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
             >
                 <RiH6 size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleBulletList().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('bulletList') }"
             >
                 <RiListUnordered size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleOrderedList().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('orderedList') }"
             >
                 <RiListOrdered size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleCodeBlock().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('codeBlock') }"
             >
                 <RiCodeBlock size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().toggleBlockquote().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
                 :class="{ 'is-active': editor.isActive('blockquote') }"
             >
                 <RiQuoteText size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().setHorizontalRule().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
             >
                 <RiRulerLine size="16px"/>
             </button>
             <button
                 @click="editor.chain().focus().setHardBreak().run()"
-                class="m-1 bg-zinc-800 rounded p-1 text-xs"
+                class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
             >
                 <RiSpace size="16px"/>
             </button>
             <!-- <button
               @click="editor.chain().focus().undo().run()"
-              class="m-1 bg-zinc-800 rounded p-1 text-xs"
+              class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
               :class="{ 'opacity-50': !editor.can().chain().focus().undo().run() }"
               :disabled="!editor.can().chain().focus().undo().run()"
             >
@@ -249,7 +249,7 @@ const saveNotes = async () => {
             </button>
             <button
               @click="editor.chain().focus().redo().run()"
-              class="m-1 bg-zinc-800 rounded p-1 text-xs"
+              class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
               :class="{ 'opacity-50': !editor.can().chain().focus().redo().run() }"
               :disabled="!editor.can().chain().focus().redo().run()"
             >

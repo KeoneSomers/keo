@@ -1,33 +1,30 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  modules: [
-    "@nuxt/ui",
-    "@nuxtjs/color-mode",
-    "nuxt-tiptap-editor",
-    "@nuxtjs/supabase",
-    "@vueuse/nuxt",
-  ],
-  colorMode: {
-    preference: "dark",
-  },
-  supabase: {
-    redirect: false,
-  },
-  runtimeConfig: {
-    // Private keys are only available on the server
-    openaiApiKey: process.env.OPENAI_API_KEY,
-    // Public keys that also need to be exposed to the client
-    public: {
-      publicApiKey: process.env.PUBLIC_API_KEY,
+    devtools: {enabled: true},
+    modules: [
+        "@nuxt/ui",
+        "@nuxtjs/color-mode",
+        "nuxt-tiptap-editor",
+        "@nuxtjs/supabase",
+        "@vueuse/nuxt",
+    ],
+    supabase: {
+        redirect: false,
     },
-  },
-  app: {
-    head: {
-      title: "Keo",
-      htmlAttrs: {
-        lang: "en",
-      },
+    runtimeConfig: {
+        // Private keys are only available on the server
+        openaiApiKey: process.env.OPENAI_API_KEY,
+        // Public keys that also need to be exposed to the client
+        public: {
+            publicApiKey: process.env.PUBLIC_API_KEY,
+        },
     },
-  },
+    app: {
+        head: {
+            title: "Keo",
+            htmlAttrs: {
+                lang: "en",
+            },
+        },
+    },
 });
