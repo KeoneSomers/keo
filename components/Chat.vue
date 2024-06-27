@@ -67,8 +67,7 @@ const sendMessage = async () => {
             method: "post",
             body: {
                 msg: msgNew,
-                // notes: notesMarkdown.value,
-                notes: "", // TODO: find a smarter way of doing this
+                 notes: notesMarkdown.value,
                 thread_id: selectedTask.value.chat_thread_id,
             },
         });
