@@ -204,7 +204,7 @@ const saveIsCompleted = async () => {
 
 <template>
     <div v-if="user">
-        <div class="flex">
+        <div class="grid grid-cols-2">
 
             <!-- Sidebar -->
             <div class="w-64">
@@ -367,3 +367,9 @@ const saveIsCompleted = async () => {
 
     </div>
 </template>
+
+<style scoped>
+.grid {
+    grid-template-columns: auto 1fr;
+  }
+</style>
