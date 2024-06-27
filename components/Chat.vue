@@ -1,6 +1,7 @@
 <script setup>
 import TurndownService from "turndown";
 import {useResizeObserver} from "@vueuse/core";
+import VueMarkdown from 'vue-markdown-render'
 
 const turndownService = new TurndownService({headingStyle: "atx"});
 
@@ -43,6 +44,8 @@ const getThreadMessages = async () => {
 //  console.log(data.value);
 
     messages.value = [welcomeMessage, ...data.value];
+
+    console.log(messages.value)
 };
 
 watchEffect(async () => {
@@ -103,19 +106,21 @@ const sendMessage = async () => {
           ]"
                 >
           <span
+              id="msg"
               class="py-2 px-3 rounded-lg"
               :class="[
               { 'bg-zinc-200 dark:bg-zinc-800 mr-6': message.role === 'assistant' },
               { 'bg-indigo-500 text-white dark:text-white dark:bg-indigo-800 ml-6': message.role === 'user' },
             ]"
           >
-            <span>{{ message.content[0].text.value }}</span>
+            <!--<span>{{ message.content[0].text.value }}</span>-->
+              <vue-markdown :source="message.content[0].text.value" />
           </span>
                 </div>
             </div>
             <!-- Pending msg -->
             <div v-if="pendingMessage" class="flex pb- justify-end">
-        <span class="py-2 px-3 rounded-lg bg-indigo-800 ml-6">
+        <span class="py-2 px-3 rounded-lg bg-indigo-500 text-white dark:bg-indigo-800 ml-6">
           <span>{{ pendingMessage }}</span>
         </span>
             </div>
@@ -137,7 +142,7 @@ const sendMessage = async () => {
                 </div>
             </div>
         </div>
-        <div class="sticky bottom-0 left-0 bc-zinc-100 dark:bg-zinc-900 px-4 pt-2">
+        <div class="sticky bottom-0 left-0 bg-zinc-50 dark:bg-zinc-900 px-4 pt-2">
             <UInput
                 v-model="newMessage"
                 @keypress.enter="sendMessage"
@@ -156,3 +161,24 @@ const sendMessage = async () => {
         </div>
     </div>
 </template>
+
+<style>
+#msg pre {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    margin: 1rem 0rem;
+    border-radius: 6px;
+}
+
+#msg pre code {
+color: white;
+    padding: 0 0;
+}
+
+#msg code {
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 4px;
+    padding: 0 0.5rem;
+}
+</style>
