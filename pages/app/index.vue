@@ -204,7 +204,7 @@ const saveIsCompleted = async () => {
 
 <template>
     <div v-if="user">
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-2 w-screen">
 
             <!-- Sidebar -->
             <div class="w-64">
