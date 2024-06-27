@@ -1,9 +1,11 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  // console.log("Running the 'Require Auth' Middleware!");
-  const user = useSupabaseUser();
+    // skip middleware on server
+    if (import.meta.server) return
 
-  // if user is not logged in - send them to the login page
-  if (!user.value) {
-    return navigateTo("/login");
-  }
+    const user = useSupabaseUser();
+
+    // if user is not logged in - send them to the login page
+    if (!user.value) {
+        return navigateTo("/login");
+    }
 });

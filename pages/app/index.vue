@@ -6,6 +6,7 @@ definePageMeta({
 });
 
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 
 const title = ref("");
 const isCompleted = ref(false);
@@ -202,7 +203,7 @@ const saveIsCompleted = async () => {
 </script>
 
 <template>
-    <div class="flex">
+    <div v-if="user" class="flex">
 
         <!-- Sidebar -->
         <div class="w-64">
