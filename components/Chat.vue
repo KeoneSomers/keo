@@ -45,7 +45,7 @@ const getThreadMessages = async () => {
 
     messages.value = [welcomeMessage, ...data.value];
 
-    console.log(messages.value)
+//    console.log(messages.value)
 };
 
 watchEffect(async () => {
@@ -70,7 +70,7 @@ const sendMessage = async () => {
             method: "post",
             body: {
                 msg: msgNew,
-                 notes: notesMarkdown.value,
+                notes: notesMarkdown.value,
                 thread_id: selectedTask.value.chat_thread_id,
             },
         });
@@ -114,7 +114,7 @@ const sendMessage = async () => {
             ]"
           >
             <!--<span>{{ message.content[0].text.value }}</span>-->
-              <vue-markdown :source="message.content[0].text.value" />
+              <vue-markdown :source="message.content[0].text.value"/>
           </span>
                 </div>
             </div>
@@ -171,7 +171,7 @@ const sendMessage = async () => {
 }
 
 #msg pre code {
-color: white;
+    color: white;
     padding: 0 0;
 }
 
