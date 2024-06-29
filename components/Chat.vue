@@ -109,7 +109,7 @@ const sendMessage = async () => {
               id="msg"
               class="py-2 px-3 rounded-lg"
               :class="[
-              { 'bg-zinc-200 dark:bg-zinc-800 mr-6': message.role === 'assistant' },
+              { 'bg-zinc-100 dark:bg-zinc-800 mr-6': message.role === 'assistant' },
               { 'bg-indigo-500 text-white dark:text-white dark:bg-indigo-800 ml-6': message.role === 'user' },
             ]"
           >
@@ -128,7 +128,7 @@ const sendMessage = async () => {
             <div>
                 <div v-if="loading" class="flex">
                     <div
-                        class="flex flex-shrink space-x-1 justify-start items-center bg-zinc-200 dark:bg-zinc-800 p-2 rounded-lg"
+                        class="flex flex-shrink space-x-1 justify-start items-center bg-zinc-100 dark:bg-zinc-800 p-2 rounded-lg"
                     >
                         <span class="sr-only">Loading...</span>
                         <div
@@ -142,7 +142,7 @@ const sendMessage = async () => {
                 </div>
             </div>
         </div>
-        <div class="sticky bottom-0 left-0 bg-zinc-50 dark:bg-zinc-900 px-4 pt-2">
+        <div class="sticky bottom-0 left-0 bg-white dark:bg-zinc-900 px-4 pt-2">
             <UInput
                 v-model="newMessage"
                 @keypress.enter="sendMessage"

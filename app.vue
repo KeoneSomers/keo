@@ -14,7 +14,7 @@ supabase.auth.onAuthStateChange(async (event) => {
 </script>
 
 <template>
-    <div class="dark:bg-zinc-950">
+    <div class="bg-zinc-50 dark:bg-zinc-950">
         <NuxtPage/>
     </div>
 </template>
