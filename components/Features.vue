@@ -3,23 +3,23 @@ const features = [
     {
         name: "Tasks",
         description:
-            "Non quo aperiam repellendus quas est est. Eos aut dolore aut ut sit nesciunt. Ex tempora quia. Sit nobis consequatur dolores incidunt.",
+            "Keep track of your tasks in a easy to use, modern interface. Tasks provide a simple way to organise your work.",
         href: "#",
-        icon: "i-heroicons-arrow-left-16-solid",
+        icon: "i-heroicons-check-circle-16-solid",
     },
     {
         name: "Notes",
         description:
-            "Vero eum voluptatem aliquid nostrum voluptatem. Vitae esse natus. Earum nihil deserunt eos quasi cupiditate. A inventore et molestiae natus.",
+            "Each task you create provides a space to keep notes. This helps you to stay organised and focused.",
         href: "#",
-        icon: "i-heroicons-arrow-left-16-solid",
+        icon: "i-heroicons-pencil-16-solid",
     },
     {
-        name: "Chat",
+        name: "AI Assistants",
         description:
-            "Et quod quaerat dolorem quaerat architecto aliquam accusantium. Ex adipisci et doloremque autem quia quam. Quis eos molestiae at iure impedit.",
+            "An AI Chat is assigned to each task you create. You can chat with AI about the task you currently have selected and it'll even have context of your tasks notes!",
         href: "#",
-        icon: "i-heroicons-arrow-left-16-solid",
+        icon: "i-heroicons-chat-bubble-left-right-16-solid",
     },
 ];
 </script>
@@ -32,8 +32,9 @@ const features = [
                     Stay on top of your work
                 </h2>
                 <p class="mt-6 text-lg leading-8 text-zinc-500 dark:text-zinc-300">
-                    Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam
-                    voluptatum cupiditate veritatis in accusamus quisquam.
+                    With Keo, you can stay organised thoughout your workday. Each task you create provides a space for
+                    your
+                    notes and a dedicated AI Assistant.
                 </p>
             </div>
             <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
