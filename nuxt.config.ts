@@ -25,6 +25,32 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: "en",
             },
+            meta: [
+                {
+                    name: "og:site_name",
+                    content: "Keo",
+                },
+                {
+                    name: "og:title",
+                    content: "Keo",
+                },
+                {
+                    name: "description",
+                    content:
+                        "Private task management for induviduals. An AI assistant and notes for each task.",
+                },
+                {
+                    name: "og:description",
+                    content:
+                        "Private task management for induviduals. An AI assistant and notes for each task.",
+                },
+                {
+                    name: "keywords",
+                    content:
+                        "task management, todo app, todo list ai, ai notes",
+                },
+                {name: "author", content: "Keo"},
+            ],
         },
     },
 });
