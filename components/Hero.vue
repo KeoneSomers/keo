@@ -19,15 +19,9 @@ const mobileMenuOpen = ref(false);
                 class="flex items-center justify-between p-6 lg:px-8"
                 aria-label="Global"
             >
-                <div class="flex lg:flex-1">
-                    <a href="#" class="-m-1.5 p-1.5">
-                        <span class="uppercase font-bold text-xl">Keo</span>
-                        <!-- <img
-                          class="h-8 w-auto"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                          alt=""
-                        /> -->
-                    </a>
+                <div class="flex lg:flex-1 items-center space-x-2">
+                    <img src="/logo.png" alt="Keo logo" class="h-4 w-4 dark:invert">
+                    <span class="uppercase font-bold text-xl opacity-80">Keo</span>
                 </div>
                 <div class="flex lg:hidden">
                     <button
@@ -141,12 +135,12 @@ const mobileMenuOpen = ref(false);
                         <h1
                             class="text-4xl font-bold tracking-tight dark:text-white sm:text-6xl"
                         >
-                            An AI Assistant for each of your work tasks
+                            Dedicated AI Assistants for each of your tasks
                         </h1>
                         <p class="mt-6 text-lg leading-8 text-zinc-500 dark:text-zinc-300">
-                            Stay organised with Keo! Each task you create provides a space to
+                            Stay organised with Keo! Each task provides a space to
                             keep notes as well as it's own assistant for you to chat with.
-                            Assistants will keep track of your task notes in order to provide
+                            Assistants can learn and understand your task in order to provide
                             the best help!
                         </p>
                         <div class="mt-10 flex items-center justify-center gap-x-6">

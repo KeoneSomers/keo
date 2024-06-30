@@ -141,7 +141,7 @@ const selectTask = async (taskId) => {
 <template>
     <div class="overflow-y-auto h-screen flex flex-col">
         <div class="px-4 py-4 flex items-center space-x-1">
-        <img src="/logo.png" class="h-3 w-3 dark:invert">
+            <img src="/logo.png" class="h-3 w-3 dark:invert">
             <span class="font-mono font-extrabold">keo</span>
         </div>
 
