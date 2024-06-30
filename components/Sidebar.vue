@@ -71,6 +71,11 @@ const filteredAndSortedTasks = computed(() => {
         return b.id - a.id;
     });
 
+    // Sort items by completed_at date
+    filteredItems.sort((a, b) => {
+        return new Date(a.completed_at) - new Date(b.completed_at);
+    });
+
     return filteredItems;
 });
 
@@ -171,7 +176,7 @@ const selectTask = async (taskId) => {
                 class="p-2 mx-4 my-1 select-none text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-200 dark:hover:bg-zinc-800 cursor-pointer truncate"
                 :class="[
             {
-              'bg-zinc-100 dark:bg-zinc-900':
+              'bg-zinc-200 dark:bg-zinc-700':
                 selectedTask !== null && task.id === selectedTask.id,
             },
             {

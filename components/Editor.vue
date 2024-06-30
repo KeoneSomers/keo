@@ -105,7 +105,7 @@ const saveNotes = async () => {
 
 <template>
     <div class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-auto">
-        <div v-if="editor" class="bg-zinc-100 dark:bg-zinc-950 m-2 rounded p-1 sticky top-0">
+        <div v-if="editor" class="bg-zinc-100 dark:bg-zinc-950 m-4 mb-0 rounded p-1 sticky top-0">
             <button
                 @click="editor.chain().focus().toggleBold().run()"
                 :disabled="!editor.can().chain().focus().toggleBold().run()"

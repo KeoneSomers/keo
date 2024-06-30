@@ -70,7 +70,7 @@ export default {
 
 
 <template>
-    <div class="dropdown-menu border-zinc-200 dark:border-black bg-white dark:bg-black">
+    <div class="dropdown-menu overflow-y-auto w-48 border-zinc-200 dark:border-black bg-white dark:bg-black">
         <template v-if="items.length">
             <button
                 :class="{ 'hover:bg-zinc-200 dark:hover:bg-zinc-500 bg-zinc-200 dark:bg-zinc-600': index === selectedIndex }"
@@ -94,7 +94,6 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    overflow: auto;
     padding: 0.4rem;
     position: relative;
 
