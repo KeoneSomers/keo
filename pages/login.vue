@@ -8,6 +8,7 @@ const user = useSupabaseUser();
 const requestPasswordResetModalOpen = ref(false)
 const resetEmail = ref("");
 const toast = useToast();
+const loadingEmail = ref(false)
 
 const state = reactive({
     email: "",
@@ -44,11 +45,13 @@ const login = async () => {
 };
 
 const sendResetEmail = async () => {
+    loadingEmail.value = true;
     console.log(resetEmail.value)
     if (resetEmail.value.length < 6 ||
         !resetEmail.value.includes("@") ||
         !resetEmail.value.includes(".")) {
         console.log("Invalid Email")
+        loadingEmail.value = false;
         return;
     }
 
@@ -63,6 +66,7 @@ const sendResetEmail = async () => {
             description: "Please try again, or contact support.",
         });
 
+        loadingEmail.value = false;
         return;
     }
 
@@ -75,6 +79,7 @@ const sendResetEmail = async () => {
     // close the modal
     resetEmail.value = "";
     requestPasswordResetModalOpen.value = false;
+    loadingEmail.value = false;
 }
 </script>
 
@@ -164,6 +169,7 @@ const sendResetEmail = async () => {
                     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                         <UButton
                             type="submit"
+                            :loading="loadingEmail"
                         >
                             Send reset email
                         </UButton>
