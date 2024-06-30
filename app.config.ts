@@ -1,6 +1,10 @@
 export default defineAppConfig({
-  ui: {
-    primary: "indigo",
-    gray: "zinc",
-  },
+    ui: {
+        primary: "indigo",
+        gray: "zinc",
+        notifications: {
+            // Show toasts at the top right of the screen
+            position: 'top-0 bottom-auto'
+        }
+    },
 });

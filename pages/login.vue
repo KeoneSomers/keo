@@ -5,6 +5,9 @@ definePageMeta({
 
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
+const requestPasswordResetModalOpen = ref(false)
+const resetEmail = ref("");
+const toast = useToast();
 
 const state = reactive({
     email: "",
@@ -39,6 +42,40 @@ const login = async () => {
         return;
     }
 };
+
+const sendResetEmail = async () => {
+    console.log(resetEmail.value)
+    if (resetEmail.value.length < 6 ||
+        !resetEmail.value.includes("@") ||
+        !resetEmail.value.includes(".")) {
+        console.log("Invalid Email")
+        return;
+    }
+
+    const {data, error} = await supabase.auth.resetPasswordForEmail(resetEmail.value, {
+        redirectTo: `${window.location.origin}/auth/reset`,
+    })
+
+    if (error) {
+        // errorMessage.value = error.message;
+        toast.add({
+            title: "Error!",
+            description: "Please try again, or contact support.",
+        });
+
+        return;
+    }
+
+    toast.add({
+        title: "Success!",
+        description:
+            "Please check your email. You should receive an email within a few minutes.",
+    });
+
+    // close the modal
+    resetEmail.value = "";
+    requestPasswordResetModalOpen.value = false;
+}
 </script>
 
 <template>
@@ -63,9 +100,14 @@ const login = async () => {
                     <UInput v-model="state.password" type="password"/>
                 </UFormGroup>
 
-                <UButton type="submit" block>Login</UButton>
-            </UForm>
+                <div class="my-4 opacity-75 text-xs text-center flex justify-end">
+                    <UButton @click="() => (requestPasswordResetModalOpen = true)" variant="link" color="black">Forgot
+                        password?
+                    </UButton>
+                </div>
 
+                <UButton type="submit" block color="black">Login</UButton>
+            </UForm>
             <div class="my-4 opacity-75 text-xs text-center">
                 <ULink to="/signup">Don't have an account? Sign up!</ULink>
             </div>
@@ -77,5 +119,57 @@ const login = async () => {
                 {{ error }}
             </div>
         </div>
+
+        <UModal v-model="requestPasswordResetModalOpen">
+            <div class="p-4">
+                <form @submit.prevent="sendResetEmail">
+                    <div class="sm:flex sm:items-start">
+                        <div
+                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-orange-100 sm:mx-0 sm:h-10 sm:w-10"
+                        >
+                            <UIcon
+                                name="i-heroicons-key"
+                                class="h-6 w-6 text-orange-600"
+                                aria-hidden="true"
+                            />
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                    Please enter the email you used to create your account.
+                                </p>
+                            </div>
+                            <div class="relative mt-4 rounded-md shadow-sm">
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+                                >
+                                    <UIcon
+                                        name="i-heroicons-envelope-solid"
+                                        class="h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                    />
+                                </div>
+                                <UInput
+                                    v-model="resetEmail"
+                                    type="email"
+                                    name="email"
+                                    required
+                                    id="email"
+                                    class="block w-full rounded-md border-gray-300 pl-10 focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
+                                    placeholder="you@example.com"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                        <UButton
+                            type="submit"
+                        >
+                            Send reset email
+                        </UButton>
+                    </div>
+                </form>
+            </div>
+        </UModal>
     </div>
 </template>

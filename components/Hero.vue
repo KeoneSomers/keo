@@ -156,7 +156,7 @@ const mobileMenuOpen = ref(false);
                             >Get started
                             </ULink
                             >
-                            <a href="#" class="text-sm font-semibold leading-6 dark:text-white"
+                            <a href="#features" class="text-sm font-semibold leading-6 dark:text-white"
                             >Learn more <span aria-hidden="true">→</span></a
                             >
                         </div>

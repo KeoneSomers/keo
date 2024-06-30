@@ -74,7 +74,7 @@ const signUp = async () => {
                     <UInput v-model="state.passwordConfirm" type="password"/>
                 </UFormGroup>
 
-                <UButton type="submit" block>Sign up</UButton>
+                <UButton type="submit" block color="black">Sign up</UButton>
             </UForm>
 
             <div class="my-4 opacity-75 text-xs text-center">
