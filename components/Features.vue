@@ -46,13 +46,13 @@ const features = [
                         :key="feature.name"
                         class="flex flex-col"
                     >
-                        <dt class="text-base font-semibold leading-7 dark:text-white">
+                        <dt class="text-base font-semibold leading-7">
                             <div
-                                class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500"
+                                class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-black text-white dark:bg-white dark:text-zinc-900"
                             >
                                 <UIcon
                                     :name="feature.icon"
-                                    class="h-6 w-6 text-white"
+                                    class="h-6 w-6"
                                     aria-hidden="true"
                                 />
                             </div>

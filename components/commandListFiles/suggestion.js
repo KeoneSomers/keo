@@ -33,7 +33,7 @@ export default {
             {
                 title: "Paragraph",
                 command: ({editor, range}) => {
-                    editor.chain().focus().deleteRange(range).setMark("paragraph").run();
+                    editor.chain().focus().deleteRange(range).setNode("paragraph").run();
                 },
             },
             {

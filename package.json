@@ -13,6 +13,7 @@
     "@nuxt/ui": "^2.17.0",
     "@nuxtjs/supabase": "^1.2.2",
     "@remixicon/vue": "^4.2.0",
+    "@tiptap/extension-code": "^2.4.0",
     "@tiptap/extension-placeholder": "^2.4.0",
     "@tiptap/suggestion": "^2.4.0",
     "@types/markdown-it": "^14.1.1",

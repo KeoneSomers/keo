@@ -1,5 +1,6 @@
 <script setup>
 import Placeholder from "@tiptap/extension-placeholder";
+import Code from '@tiptap/extension-code'
 import Commands from "./commandListFiles/commands.js";
 import suggestion from "./commandListFiles/suggestion.js";
 import {useDebounceFn} from "@vueuse/core";
@@ -36,6 +37,7 @@ const editor = useEditor({
     autofocus: true,
     extensions: [
         TiptapStarterKit,
+        Code,
         Commands.configure({
             suggestion,
         }),
@@ -272,4 +274,13 @@ p.is-editor-empty:first-child::before {
     height: 0;
     pointer-events: none;
 }
+
+/* Code and preformatted text styles */
+  .tiptap :not(pre) code {
+    background-color: black;
+    border-radius: 0.4rem;
+    color: lightgrey;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.2rem;
+  }
 </style>
