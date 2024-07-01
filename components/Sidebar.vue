@@ -198,12 +198,13 @@ const selectTask = async (taskId) => {
         <!-- account dropdown -->
         <div class="m-4">
             <!-- Keo Plus Promo -->
-            <div
-                class="bg-gradient-to-r from-indigo-200 to-yellow-100 dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75"
+            <a
+                href="mailto:keone.somers@outlook.com"
+                class="block bg-gradient-to-r from-indigo-200 to-yellow-100 dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75 hover:rotate-3 transition-transform hover:scale-105 hover:shadow-xl"
             >
-                <p class="text-sm">Upgrade to Keo Plus!</p>
-                <p class="opacity-50 text-xs">Coming soon...</p>
-            </div>
+                <p class="text-sm font-bold opacity-80">Got feedback?</p>
+                <p class="opacity-50 text-xs">We'd love to hear from you!</p>
+            </a>
             <div class="flex space-x-1">
                 <UDropdown
                     :items="accountDropdownItems"
