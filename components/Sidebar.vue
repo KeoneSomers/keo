@@ -86,7 +86,15 @@ const filteredAndSortedTasks = computed(() => {
     return filteredItems;
 });
 
+const feedbackLoading = ref(false);
+
 const onSubmitFeedback = async () => {
+    if (feedbackLoading.value === true) {
+        return;
+    }
+
+    feedbackLoading.value = true;
+
     const {error} = await supabase
         .from('feedback')
         .insert(
@@ -95,12 +103,14 @@ const onSubmitFeedback = async () => {
 
     if (error) {
         console.log(error.message);
+        feedbackLoading.value = false;
         toast.add({title: 'Error sending feedback, Please try again later.'})
         return;
     }
 
     toast.add({title: 'Thank you for your feedback!'})
     feedbackModalOpen.value = false;
+    feedbackLoading.value = false;
 }
 
 const throttledFnCreateNewTask = useThrottleFn(() => {
@@ -252,7 +262,7 @@ const selectTask = async (taskId) => {
             <div class="p-4">
                 <UForm :state="feedbackFormState" @submit="onSubmitFeedback">
                     <UTextarea v-model="feedbackFormState.feedback" rows="10"/>
-                    <UButton label="Submit" type="submit" block class="mt-4"/>
+                    <UButton :loading="feedbackLoading" label="Submit" type="submit" block class="mt-4"/>
                 </UForm>
 
             </div>
