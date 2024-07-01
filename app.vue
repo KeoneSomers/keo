@@ -1,4 +1,6 @@
 <script setup>
+import {SpeedInsights} from '@vercel/speed-insights/vue';
+
 const supabase = useSupabaseClient();
 
 supabase.auth.onAuthStateChange(async (event) => {
@@ -17,5 +19,6 @@ supabase.auth.onAuthStateChange(async (event) => {
     <div class="bg-zinc-50 dark:bg-zinc-950">
         <NuxtPage/>
         <UNotifications/>
+        <SpeedInsights/>
     </div>
 </template>
