@@ -22,6 +22,7 @@ const mobileMenuOpen = ref(false);
                 <div class="flex lg:flex-1 items-center space-x-2">
                     <img src="/logo.png" alt="Keo logo" class="h-4 w-4 dark:invert">
                     <span class="uppercase font-bold text-xl opacity-80">Keo</span>
+                    <span class="text-xs pt-1 opacity-30">Beta v1</span>
                 </div>
                 <div class="flex lg:hidden">
                     <button

@@ -148,6 +148,7 @@ const selectTask = async (taskId) => {
         <div class="px-4 py-4 flex items-center space-x-1">
             <img src="/logo.png" class="h-3 w-3 dark:invert">
             <span class="font-mono font-extrabold">keo</span>
+            <span class="text-xs pt-1 opacity-30">Beta v1</span>
         </div>
 
         <div class="p-4">
