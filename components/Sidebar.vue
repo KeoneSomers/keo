@@ -5,10 +5,17 @@ const searchQuery = ref("");
 
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
+const toast = useToast()
+
+const feedbackModalOpen = ref(false)
 
 
 const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
+
+const feedbackFormState = reactive({
+    feedback: "",
+})
 
 const signOut = async () => {
     const {error} = await supabase.auth.signOut();
@@ -78,6 +85,23 @@ const filteredAndSortedTasks = computed(() => {
 
     return filteredItems;
 });
+
+const onSubmitFeedback = async () => {
+    const {error} = await supabase
+        .from('feedback')
+        .insert(
+            {feedback: feedbackFormState.feedback}
+        )
+
+    if (error) {
+        console.log(error.message);
+        toast.add({title: 'Error sending feedback, Please try again later.'})
+        return;
+    }
+
+    toast.add({title: 'Thank you for your feedback!'})
+    feedbackModalOpen.value = false;
+}
 
 const throttledFnCreateNewTask = useThrottleFn(() => {
     // do something, it will be called at most 1 time per 1.5 seconds
@@ -200,7 +224,7 @@ const selectTask = async (taskId) => {
         <div class="m-4">
             <!-- Keo Plus Promo -->
             <a
-                href="mailto:keone.somers@outlook.com"
+                @click="feedbackModalOpen = true"
                 class="block bg-gradient-to-r from-indigo-200 to-yellow-100 dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75 hover:rotate-3 transition-transform hover:scale-105 hover:shadow-xl"
             >
                 <p class="text-sm font-bold opacity-80">Got feedback?</p>
@@ -223,5 +247,15 @@ const selectTask = async (taskId) => {
             </div>
 
         </div>
+
+        <UModal v-model="feedbackModalOpen">
+            <div class="p-4">
+                <UForm :state="feedbackFormState" @submit="onSubmitFeedback">
+                    <UTextarea v-model="feedbackFormState.feedback" rows="10"/>
+                    <UButton label="Submit" type="submit" block class="mt-4"/>
+                </UForm>
+
+            </div>
+        </UModal>
     </div>
 </template>
