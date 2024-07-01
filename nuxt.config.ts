@@ -38,12 +38,12 @@ export default defineNuxtConfig({
                 {
                     name: "description",
                     content:
-                        "Private task management for induviduals. An AI assistant and notes for each task.",
+                        "A simple but powerful task management tool for individual professionals. An AI assistant and notes for each of your tasks.",
                 },
                 {
                     name: "og:description",
                     content:
-                        "Private task management for induviduals. An AI assistant and notes for each task.",
+                        "A simple but powerful task management tool for individual professionals. An AI assistant and notes for each of your tasks.",
                 },
                 {
                     name: "keywords",
