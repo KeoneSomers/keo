@@ -101,160 +101,150 @@ const saveNotes = async () => {
         console.log(error);
     }
 };
+
+const toolbarActions = computed(() => {
+    if (editor.value) {
+        return [
+            {
+                id: 0,
+                icon: RiBold,
+                clickAction: () => editor.value.chain().focus().toggleBold().run(),
+                isDisabled: !editor.value.can().chain().focus().toggleBold().run(),
+                isActive: editor.value.isActive('bold')
+            },
+            {
+                id: 1,
+                icon: RiItalic,
+                clickAction: () => editor.value.chain().focus().toggleItalic().run(),
+                isDisabled: !editor.value.can().chain().focus().toggleItalic().run(),
+                isActive: editor.value.isActive('italic')
+            },
+            {
+                id: 2,
+                icon: RiStrikethrough,
+                clickAction: () => editor.value.chain().focus().toggleStrike().run(),
+                isDisabled: !editor.value.can().chain().focus().toggleStrike().run(),
+                isActive: editor.value.isActive('strike')
+            },
+            {
+                id: 3,
+                icon: RiCodeLine,
+                clickAction: () => editor.value.chain().focus().toggleCode().run(),
+                isDisabled: !editor.value.can().chain().focus().toggleCode().run(),
+                isActive: editor.value.isActive('code')
+            },
+            {
+                id: 4,
+                icon: RiParagraph,
+                clickAction: () => editor.value.chain().focus().setParagraph().run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('paragraph')
+            },
+            {
+                id: 5,
+                icon: RiH1,
+                clickAction: () => editor.value.chain().focus().toggleHeading({level: 1}).run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('heading', {level: 1})
+            },
+            {
+                id: 6,
+                icon: RiH2,
+                clickAction: () => editor.value.chain().focus().toggleHeading({level: 2}).run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('heading', {level: 2})
+            },
+            {
+                id: 7,
+                icon: RiH3,
+                clickAction: () => editor.value.chain().focus().toggleHeading({level: 3}).run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('heading', {level: 3})
+            },
+            {
+                id: 8,
+                icon: RiH4,
+                clickAction: () => editor.value.chain().focus().toggleHeading({level: 4}).run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('heading', {level: 4})
+            },
+            {
+                id: 9,
+                icon: RiH5,
+                clickAction: () => editor.value.chain().focus().toggleHeading({level: 5}).run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('heading', {level: 5})
+            },
+            {
+                id: 10,
+                icon: RiH6,
+                clickAction: () => editor.value.chain().focus().toggleHeading({level: 6}).run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('heading', {level: 6})
+            },
+            {
+                id: 11,
+                icon: RiListUnordered,
+                clickAction: () => editor.value.chain().focus().toggleBulletList().run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('bulletList')
+            },
+            {
+                id: 12,
+                icon: RiListOrdered,
+                clickAction: () => editor.value.chain().focus().toggleOrderedList().run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('orderedList')
+            },
+            {
+                id: 13,
+                icon: RiCodeBlock,
+                clickAction: () => editor.value.chain().focus().toggleCodeBlock().run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('codeBlock')
+            },
+            {
+                id: 14,
+                icon: RiQuoteText,
+                clickAction: () => editor.value.chain().focus().toggleBlockquote().run(),
+                isDisabled: false,
+                isActive: editor.value.isActive('blockquote')
+            },
+            {
+                id: 15,
+                icon: RiRulerLine,
+                clickAction: () => editor.value.chain().focus().setHorizontalRule().run(),
+                isDisabled: false,
+                isActive: false
+            },
+            {
+                id: 16,
+                icon: RiSpace,
+                clickAction: () => editor.value.chain().focus().setHardBreak().run(),
+                isDisabled: false,
+                isActive: false
+            }
+        ]
+    } else {
+        return []
+    }
+})
 </script>
 
 <template>
     <div class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-auto">
         <div v-if="editor" class="bg-zinc-100 dark:bg-zinc-950 m-4 mb-0 rounded p-1 sticky top-0">
             <button
-                @click="editor.chain().focus().toggleBold().run()"
-                :disabled="!editor.can().chain().focus().toggleBold().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('bold') }"
+                v-for="action in toolbarActions"
+                :key="action.id"
+                @click="action.clickAction()"
+                :disabled="action.isDisabled"
+                class="m-1 rounded p-1 text-xs"
+                :class="[{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 hover:dark:bg-zinc-300 dark:text-zinc-900': action.isActive },
+                         {'hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800': !action.isActive}]"
             >
-                <RiBold size="16px"/>
+                <component :is="action.icon" size="16px"/>
             </button>
-            <button
-                @click="editor.chain().focus().toggleItalic().run()"
-                :disabled="!editor.can().chain().focus().toggleItalic().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('italic') }"
-            >
-                <RiItalic size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleStrike().run()"
-                :disabled="!editor.can().chain().focus().toggleStrike().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('strike') }"
-            >
-                <RiStrikethrough size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleCode().run()"
-                :disabled="!editor.can().chain().focus().toggleCode().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('code') }"
-            >
-                <RiCodeLine size="16px"/>
-            </button>
-            <!-- <button
-              @click="editor.chain().focus().unsetAllMarks().run()"
-              class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 rounded p-1 text-xs"
-            >
-              clear marks
-            </button>
-            <button
-              @click="editor.chain().focus().clearNodes().run()"
-              class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 rounded p-1 text-xs"
-            >
-              clear nodes
-            </button> -->
-            <button
-                @click="editor.chain().focus().setParagraph().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('paragraph') }"
-            >
-                <RiParagraph size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('heading', { level: 1 }) }"
-            >
-                <RiH1 size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('heading', { level: 2 }) }"
-            >
-                <RiH2 size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('heading', { level: 3 }) }"
-            >
-                <RiH3 size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('heading', { level: 4 }) }"
-            >
-                <RiH4 size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('heading', { level: 5 }) }"
-            >
-                <RiH5 size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('heading', { level: 6 }) }"
-            >
-                <RiH6 size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleBulletList().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('bulletList') }"
-            >
-                <RiListUnordered size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleOrderedList().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('orderedList') }"
-            >
-                <RiListOrdered size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleCodeBlock().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('codeBlock') }"
-            >
-                <RiCodeBlock size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().toggleBlockquote().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-                :class="{ 'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 dark:text-zinc-900': editor.isActive('blockquote') }"
-            >
-                <RiQuoteText size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().setHorizontalRule().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-            >
-                <RiRulerLine size="16px"/>
-            </button>
-            <button
-                @click="editor.chain().focus().setHardBreak().run()"
-                class="m-1 hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800 rounded p-1 text-xs"
-            >
-                <RiSpace size="16px"/>
-            </button>
-            <!-- <button
-              @click="editor.chain().focus().undo().run()"
-              class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
-              :class="{ 'opacity-50': !editor.can().chain().focus().undo().run() }"
-              :disabled="!editor.can().chain().focus().undo().run()"
-            >
-              <RiArrowGoBackLine size="16px" />
-            </button>
-            <button
-              @click="editor.chain().focus().redo().run()"
-              class="m-1 bg-zinc-100 dark:bg-zinc-800 rounded p-1 text-xs"
-              :class="{ 'opacity-50': !editor.can().chain().focus().redo().run() }"
-              :disabled="!editor.can().chain().focus().redo().run()"
-            >
-              <RiArrowGoForwardLine size="16px" />
-            </button> -->
         </div>
         <div class="flex flex-1">
             <div class="flex-1">
