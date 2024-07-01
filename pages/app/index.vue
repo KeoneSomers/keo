@@ -266,7 +266,7 @@ const saveIsCompleted = async () => {
                     </div>
                     <div
                         v-else
-                        class="h-[calc(100vh-56px)] flex flex-1 justify-center items-center"
+                        class="h-[calc(100vh-16px)] flex flex-1 justify-center items-center border rounded-lg bg-white dark:bg-zinc-900 dark:border-zinc-800"
                     >
                         <span class="opacity-45">No task selected.</span>
                     </div>
