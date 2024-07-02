@@ -132,7 +132,6 @@ const createNewTask = async () => {
     const {data: newTask, error} = await supabase
         .from("tasks")
         .insert({
-            created_by: user.value.id,
             title: null,
             notes: null,
             chat_thread_id: thread.value.id,
