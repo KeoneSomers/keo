@@ -305,10 +305,30 @@ p.is-editor-empty:first-child::before {
 }
 
 /* Code and preformatted text styles */
-.tiptap :not(pre) code {
-  background-color: black;
+.light pre {
+  background-color: #f4f4f5;
+  color: black;
+  font-weight: bold;
+}
+
+.dark pre {
+  background-color: #3a3a3a;
+  color: white;
+  font-weight: bold;
+}
+
+.light .tiptap :not(pre) code {
+  background-color: #f4f4f5;
   border-radius: 0.4rem;
-  color: lightgrey;
+  color: black;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.2rem;
+}
+
+.dark .tiptap :not(pre) code {
+  background-color: #3a3a3a;
+  border-radius: 0.4rem;
+  color: white;
   font-size: 0.75rem;
   padding: 0.2rem 0.2rem;
 }
