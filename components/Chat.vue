@@ -114,7 +114,7 @@ const sendMessage = async () => {
                   message.role === 'assistant',
               },
               {
-                'bg-indigo-500 text-white dark:text-white dark:bg-indigo-800 ml-6':
+                'bg-zinc-900 text-white dark:text-black dark:bg-white ml-6':
                   message.role === 'user',
               },
             ]"
