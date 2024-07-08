@@ -255,7 +255,7 @@ const saveIsCompleted = async () => {
               <div class="flex flex-col flex-1 dark:border-zinc-800 border-r">
                 <Editor />
               </div>
-              <div class="flex-1">
+              <div class="w-96">
                 <Chat />
               </div>
             </div>

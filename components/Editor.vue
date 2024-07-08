@@ -109,6 +109,7 @@ const toolbarActions = computed(() => {
     return [
       {
         id: 0,
+        label: "Bold",
         icon: RiBold,
         clickAction: () => editor.value.chain().focus().toggleBold().run(),
         isDisabled: !editor.value.can().chain().focus().toggleBold().run(),
@@ -116,6 +117,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 1,
+        label: "Italic",
         icon: RiItalic,
         clickAction: () => editor.value.chain().focus().toggleItalic().run(),
         isDisabled: !editor.value.can().chain().focus().toggleItalic().run(),
@@ -123,6 +125,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 2,
+        label: "Strike Through",
         icon: RiStrikethrough,
         clickAction: () => editor.value.chain().focus().toggleStrike().run(),
         isDisabled: !editor.value.can().chain().focus().toggleStrike().run(),
@@ -130,6 +133,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 3,
+        label: "Code (Inline)",
         icon: RiCodeLine,
         clickAction: () => editor.value.chain().focus().toggleCode().run(),
         isDisabled: !editor.value.can().chain().focus().toggleCode().run(),
@@ -137,6 +141,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 4,
+        label: "Paragraph",
         icon: RiParagraph,
         clickAction: () => editor.value.chain().focus().setParagraph().run(),
         isDisabled: false,
@@ -144,6 +149,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 5,
+        label: "Heading 1",
         icon: RiH1,
         clickAction: () =>
           editor.value.chain().focus().toggleHeading({ level: 1 }).run(),
@@ -152,6 +158,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 6,
+        label: "Heading 2",
         icon: RiH2,
         clickAction: () =>
           editor.value.chain().focus().toggleHeading({ level: 2 }).run(),
@@ -160,6 +167,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 7,
+        label: "Heading 3",
         icon: RiH3,
         clickAction: () =>
           editor.value.chain().focus().toggleHeading({ level: 3 }).run(),
@@ -168,6 +176,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 8,
+        label: "Heading 4",
         icon: RiH4,
         clickAction: () =>
           editor.value.chain().focus().toggleHeading({ level: 4 }).run(),
@@ -176,6 +185,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 9,
+        label: "Heading 5",
         icon: RiH5,
         clickAction: () =>
           editor.value.chain().focus().toggleHeading({ level: 5 }).run(),
@@ -184,6 +194,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 10,
+        label: "Heading 6",
         icon: RiH6,
         clickAction: () =>
           editor.value.chain().focus().toggleHeading({ level: 6 }).run(),
@@ -192,6 +203,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 11,
+        label: "Bullet List",
         icon: RiListUnordered,
         clickAction: () =>
           editor.value.chain().focus().toggleBulletList().run(),
@@ -200,6 +212,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 12,
+        label: "Numbered List",
         icon: RiListOrdered,
         clickAction: () =>
           editor.value.chain().focus().toggleOrderedList().run(),
@@ -208,6 +221,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 13,
+        label: "Code (Block)",
         icon: RiCodeBlock,
         clickAction: () => editor.value.chain().focus().toggleCodeBlock().run(),
         isDisabled: false,
@@ -215,6 +229,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 14,
+        label: "Quote Text",
         icon: RiQuoteText,
         clickAction: () =>
           editor.value.chain().focus().toggleBlockquote().run(),
@@ -223,6 +238,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 15,
+        label: "Horizontal Rule",
         icon: RiRulerLine,
         clickAction: () =>
           editor.value.chain().focus().setHorizontalRule().run(),
@@ -231,6 +247,7 @@ const toolbarActions = computed(() => {
       },
       {
         id: 16,
+        label: "Line Break",
         icon: RiSpace,
         clickAction: () => editor.value.chain().focus().setHardBreak().run(),
         isDisabled: false,
@@ -249,25 +266,29 @@ const toolbarActions = computed(() => {
       v-if="editor"
       class="bg-zinc-100 dark:bg-zinc-950 m-4 mb-0 rounded p-1 sticky top-0"
     >
-      <button
+      <UTooltip
         v-for="action in toolbarActions"
         :key="action.id"
-        @click="action.clickAction()"
-        :disabled="action.isDisabled"
-        class="m-1 rounded p-1 text-xs"
-        :class="[
-          {
-            'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 hover:dark:bg-zinc-300 dark:text-zinc-900':
-              action.isActive,
-          },
-          {
-            'hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800':
-              !action.isActive,
-          },
-        ]"
+        :text="action.label"
       >
-        <component :is="action.icon" size="16px" />
-      </button>
+        <button
+          @click="action.clickAction()"
+          :disabled="action.isDisabled"
+          class="m-1 rounded p-1 text-xs"
+          :class="[
+            {
+              'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 hover:dark:bg-zinc-300 dark:text-zinc-900':
+                action.isActive,
+            },
+            {
+              'hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800':
+                !action.isActive,
+            },
+          ]"
+        >
+          <component :is="action.icon" size="16px" />
+        </button>
+      </UTooltip>
     </div>
     <div class="flex flex-1">
       <div class="flex-1">
