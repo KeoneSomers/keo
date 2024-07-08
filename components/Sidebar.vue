@@ -1,5 +1,6 @@
 <script setup>
 import { useThrottleFn } from "@vueuse/core";
+import { format, isToday, isYesterday, subDays, isAfter } from "date-fns";
 
 const searchQuery = ref("");
 
@@ -38,7 +39,7 @@ const accountDropdownItems = [
 const getTasks = async () => {
   const { data, error } = await supabase
     .from("tasks")
-    .select("id, title, completed_at")
+    .select("id, title, completed_at, created_at, updated_at")
     .eq("created_by", user.value.id)
     .order("id", { ascending: false });
 
@@ -83,6 +84,38 @@ const filteredAndSortedTasks = computed(() => {
   });
 
   return filteredItems;
+});
+
+const tasksGroupedByDate = computed(() => {
+  const tasks = filteredAndSortedTasks.value;
+
+  const today = [];
+  const yesterday = [];
+  const last7Days = [];
+  const older = [];
+
+  tasks.forEach((task) => {
+    const date = task.updated_at
+      ? new Date(task.updated_at)
+      : new Date(task.created_at);
+
+    if (isToday(date)) {
+      today.push(task);
+    } else if (isYesterday(date)) {
+      yesterday.push(task);
+    } else if (isAfter(date, subDays(new Date(), 7))) {
+      last7Days.push(task);
+    } else {
+      older.push(task);
+    }
+  });
+
+  return [
+    { title: "Today", tasks: today },
+    { title: "Yesterday", tasks: yesterday },
+    { title: "Last 7 Days", tasks: last7Days },
+    { title: "Older", tasks: older },
+  ];
 });
 
 const feedbackLoading = ref(false);
@@ -199,25 +232,32 @@ const selectTask = async (taskId) => {
     </div>
     <!-- tasks list -->
     <div class="flex-1 overflow-y-auto">
-      <div
-        v-for="task in filteredAndSortedTasks"
-        :key="task.id"
-        @click="handleSelectTask(task.id)"
-        class="p-2 mx-4 my-1 select-none text-sm rounded-lg border-zinc-700 border-dashed hover:bg-zinc-200 dark:hover:bg-zinc-800 cursor-pointer truncate"
-        :class="[
-          {
-            'bg-zinc-200 dark:bg-zinc-700':
-              selectedTask !== null && task.id === selectedTask.id,
-          },
-          {
-            'opacity-50': selectedTask === null || task.id !== selectedTask.id,
-          },
-          { 'line-through': task.completed_at !== null },
-        ]"
-      >
-        <span>{{
-          task.title === "" || task.title === null ? "Unnamed Task" : task.title
-        }}</span>
+      <div v-for="group in tasksGroupedByDate">
+        <div
+          v-if="group.tasks.length > 0"
+          class="pl-4 pt-4 text-xs opacity-50 font-semibold"
+        >
+          {{ group.title }}
+        </div>
+        <div
+          v-for="task in group.tasks"
+          :key="task.id"
+          @click="handleSelectTask(task.id)"
+          class="p-2 mx-4 my-1 select-none text-sm rounded-lg text-zinc-700 dark:text-zinc-300 border-zinc-700 border-dashed hover:bg-zinc-200 dark:hover:bg-zinc-800 cursor-pointer truncate"
+          :class="[
+            {
+              'bg-zinc-200 dark:bg-zinc-700':
+                selectedTask !== null && task.id === selectedTask.id,
+            },
+            { 'line-through': task.completed_at !== null },
+          ]"
+        >
+          <span>{{
+            task.title === "" || task.title === null
+              ? "Unnamed Task"
+              : task.title
+          }}</span>
+        </div>
       </div>
     </div>
 

@@ -38,9 +38,12 @@ watchDebounced(
 
 const saveTitle = async () => {
   console.log("Saving title");
+  const currentDate = new Date();
+  const currentDatetimeZ = currentDate.toISOString();
+
   const { error } = await supabase
     .from("tasks")
-    .update({ title: title.value })
+    .update({ title: title.value, updated_at: currentDatetimeZ })
     .eq("id", selectedTask.value.id);
 
   if (error) {
@@ -56,6 +59,7 @@ const saveTitle = async () => {
     (item) => item.id === selectedTask.value.id
   );
   tasks.value[index].title = title.value;
+  tasks.value[index].updated_at = currentDatetimeZ;
 };
 
 const isOpenDeleteConfirmation = ref(false);

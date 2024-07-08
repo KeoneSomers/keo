@@ -21,6 +21,7 @@
     "@vercel/speed-insights": "^1.0.12",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
+    "date-fns": "^3.6.0",
     "nuxt": "^3.12.2",
     "nuxt-tiptap-editor": "^1.1.2",
     "openai": "^4.52.0",

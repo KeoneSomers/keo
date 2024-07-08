@@ -29,6 +29,7 @@ const turndownService = new TurndownService({ headingStyle: "atx" });
 
 const supabase = useSupabaseClient();
 const selectedTask = useState("selectedTask");
+const tasks = useState("tasks", () => []);
 
 const notesMarkdown = useState("notesMarkdown", () => "");
 
@@ -94,14 +95,23 @@ const debouncedFnSaveNotes = useDebounceFn(() => {
 
 const saveNotes = async () => {
   console.log("Saving notes");
+
+  const currentDate = new Date();
+  const currentDatetimeZ = currentDate.toISOString();
+
   const { error } = await supabase
     .from("tasks")
-    .update({ notes: selectedTask.value.notes })
+    .update({ notes: selectedTask.value.notes, updated_at: currentDatetimeZ })
     .eq("id", selectedTask.value.id);
 
   if (error) {
     console.log(error);
   }
+
+  const index = tasks.value.findIndex(
+    (item) => item.id === selectedTask.value.id
+  );
+  tasks.value[index].updated_at = currentDatetimeZ;
 };
 
 const toolbarActions = computed(() => {
