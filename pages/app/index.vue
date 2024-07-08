@@ -16,6 +16,8 @@ const deleteLoading = ref(false);
 const tasks = useState("tasks", () => []);
 const selectedTask = useState("selectedTask", () => null);
 
+console.log(selectedTask.value);
+
 watchEffect(async () => {
   if (selectedTask.value) {
     title.value = selectedTask.value.title;
@@ -214,7 +216,7 @@ const saveIsCompleted = async () => {
         <div class="p-2 pl-0 h-screen flex-1">
           <div
             v-if="selectedTask"
-            class="flex flex-col flex-1 pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-white dark:bg-zinc-900"
+            class="flex flex-col flex-1 shadow-sm pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-white dark:bg-zinc-900"
           >
             <div class="p-1 border-b dark:border-zinc-800 flex items-center">
               <div class="pl-3 flex items-center">
