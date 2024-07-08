@@ -107,14 +107,13 @@ const sendMessage = async () => {
         >
           <span
             id="msg"
-            class="py-2 px-3 rounded-lg"
+            class="py-2 rounded-lg"
             :class="[
               {
-                'bg-zinc-50 dark:bg-zinc-800 mr-6':
-                  message.role === 'assistant',
+                'mr-6': message.role === 'assistant',
               },
               {
-                'bg-zinc-900 text-white dark:text-black dark:bg-white ml-6':
+                'bg-zinc-900 text-white dark:text-black dark:bg-white ml-6 px-3':
                   message.role === 'user',
               },
             ]"
