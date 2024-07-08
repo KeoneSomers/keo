@@ -126,7 +126,7 @@ const sendMessage = async () => {
       <!-- Pending msg -->
       <div v-if="pendingMessage" class="flex pb- justify-end">
         <span
-          class="py-2 px-3 rounded-lg bg-indigo-500 text-white dark:bg-indigo-800 ml-6"
+          class="py-2 px-3 rounded-lg bg-zinc-900 text-white dark:text-black dark:bg-white ml-6"
         >
           <span>{{ pendingMessage }}</span>
         </span>
