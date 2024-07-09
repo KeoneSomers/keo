@@ -58,7 +58,7 @@ const editor = useEditor({
   editorProps: {
     attributes: {
       class:
-        "prose prose-base prose-zinc dark:prose-invert m-5 focus:outline-none h-full",
+        "prose prose-base prose-zinc dark:prose-invert m-5 focus:outline-none h-full mr-0 max-w-full m-4",
     },
   },
   onUpdate: ({ editor }) => {
@@ -107,6 +107,8 @@ const saveNotes = async () => {
   if (error) {
     console.log(error);
   }
+
+  selectedTask.value.updated_at = currentDatetimeZ;
 
   const index = tasks.value.findIndex(
     (item) => item.id === selectedTask.value.id
@@ -272,34 +274,34 @@ const toolbarActions = computed(() => {
 
 <template>
   <div class="flex flex-col h-[calc(100vh-16px-57px-2px)] overflow-auto">
-    <div
-      v-if="editor"
-      class="bg-zinc-100 dark:bg-zinc-950 m-4 mb-0 rounded p-1 sticky top-0"
-    >
-      <UTooltip
-        v-for="action in toolbarActions"
-        :key="action.id"
-        :text="action.label"
-      >
-        <button
-          @click="action.clickAction()"
-          :disabled="action.isDisabled"
-          class="m-1 rounded p-1 text-xs"
-          :class="[
-            {
-              'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 hover:dark:bg-zinc-300 dark:text-zinc-900':
-                action.isActive,
-            },
-            {
-              'hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800':
-                !action.isActive,
-            },
-          ]"
+    <div class="p-4 bg-white dark:bg-zinc-900 sticky top-0 z-10">
+      <div v-if="editor" class="mb-0 rounded bg-zinc-100 dark:bg-zinc-950">
+        <UTooltip
+          v-for="action in toolbarActions"
+          :key="action.id"
+          :text="action.label"
         >
-          <component :is="action.icon" size="16px" />
-        </button>
-      </UTooltip>
+          <button
+            @click="action.clickAction()"
+            :disabled="action.isDisabled"
+            class="m-1 rounded p-1 text-xs"
+            :class="[
+              {
+                'bg-zinc-900 hover:bg-zinc-700 text-white dark:bg-zinc-50 hover:dark:bg-zinc-300 dark:text-zinc-900':
+                  action.isActive,
+              },
+              {
+                'hover:bg-zinc-200 dark:bg-zinc-950 hover:dark:bg-zinc-800':
+                  !action.isActive,
+              },
+            ]"
+          >
+            <component :is="action.icon" size="16px" />
+          </button>
+        </UTooltip>
+      </div>
     </div>
+
     <div class="flex flex-1">
       <div class="flex-1">
         <TiptapEditorContent :editor="editor" class="h-full" />

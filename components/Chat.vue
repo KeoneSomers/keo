@@ -25,8 +25,7 @@ const welcomeMessage = {
   content: [
     {
       text: {
-        value:
-          "Hey there! I'm an AI assistant happy to help you with this task.",
+        value: "Hey! I'm your AI assistant ready to help you with this task.",
       },
     },
   ],

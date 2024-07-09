@@ -1,5 +1,6 @@
 <script setup>
 import { watchDebounced } from "@vueuse/core";
+import { formatRelative } from "date-fns";
 
 definePageMeta({
   middleware: ["require-auth"],
@@ -53,6 +54,7 @@ const saveTitle = async () => {
 
   // update local state
   selectedTask.value.title = title.value;
+  selectedTask.value.updated_at = currentDatetimeZ;
 
   // For the title - also need to update it in the sidebar list
   const index = tasks.value.findIndex(
@@ -220,7 +222,7 @@ const saveIsCompleted = async () => {
         <div class="p-2 pl-0 h-screen flex-1">
           <div
             v-if="selectedTask"
-            class="flex flex-col flex-1 shadow-sm pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-white dark:bg-zinc-900"
+            class="flex flex-col relative flex-1 shadow-sm pl-0 rounded-lg overflow-hidden dark:border-zinc-800 border bg-white dark:bg-zinc-900"
           >
             <div class="p-1 border-b dark:border-zinc-800 flex items-center">
               <div class="pl-3 flex items-center">
@@ -264,6 +266,20 @@ const saveIsCompleted = async () => {
               <div class="w-96">
                 <Chat />
               </div>
+            </div>
+            <div
+              class="absolute bottom-2 flex items-center left-2 text-xs border dark:border-zinc-600 rounded-full px-1 pr-2 py-1 opacity-75"
+            >
+              <UIcon
+                name="i-heroicons-check-circle-20-solid"
+                class="h-4 w-4 text-green-600 mr-1"
+              />
+              Last saved
+              {{
+                selectedTask.updated_at !== null
+                  ? formatRelative(selectedTask.updated_at, new Date())
+                  : formatRelative(selectedTask.created_at, new Date())
+              }}
             </div>
           </div>
           <div
