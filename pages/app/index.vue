@@ -1,6 +1,6 @@
 <script setup>
 import { watchDebounced } from "@vueuse/core";
-import { formatRelative } from "date-fns";
+import { formatDistance } from "date-fns";
 
 definePageMeta({
   middleware: ["require-auth"],
@@ -274,11 +274,15 @@ const saveIsCompleted = async () => {
                 name="i-heroicons-check-circle-20-solid"
                 class="h-4 w-4 text-green-600 mr-1"
               />
-              Last saved
+              All changes saved
               {{
                 selectedTask.updated_at !== null
-                  ? formatRelative(selectedTask.updated_at, new Date())
-                  : formatRelative(selectedTask.created_at, new Date())
+                  ? formatDistance(selectedTask.updated_at, new Date(), {
+                      addSuffix: true,
+                    })
+                  : formatDistance(selectedTask.created_at, new Date(), {
+                      addSuffix: true,
+                    })
               }}
             </div>
           </div>
