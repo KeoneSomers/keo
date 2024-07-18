@@ -18,41 +18,41 @@ import {
 } from "@remixicon/vue";
 
 export const actions = [
-  {
-    label: "Bold",
-    icon: RiBold,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setMark("bold").run();
-    },
-  },
-  {
-    label: "Italic",
-    icon: RiItalic,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setMark("italic").run();
-    },
-  },
-  {
-    label: "Strikethough",
-    icon: RiStrikethrough,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setMark("strike").run();
-    },
-  },
-  {
-    label: "Code",
-    icon: RiCodeLine,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setMark("code").run();
-    },
-  },
-  {
-    label: "Paragraph",
-    icon: RiParagraph,
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setNode("paragraph").run();
-    },
-  },
+  // {
+  //   label: "Bold",
+  //   icon: RiBold,
+  //   command: ({ editor, range }) => {
+  //     editor.chain().focus().deleteRange(range).setMark("bold").run();
+  //   },
+  // },
+  // {
+  //   label: "Italic",
+  //   icon: RiItalic,
+  //   command: ({ editor, range }) => {
+  //     editor.chain().focus().deleteRange(range).setMark("italic").run();
+  //   },
+  // },
+  // {
+  //   label: "Strikethough",
+  //   icon: RiStrikethrough,
+  //   command: ({ editor, range }) => {
+  //     editor.chain().focus().deleteRange(range).setMark("strike").run();
+  //   },
+  // },
+  // {
+  //   label: "Code",
+  //   icon: RiCodeLine,
+  //   command: ({ editor, range }) => {
+  //     editor.chain().focus().deleteRange(range).setMark("code").run();
+  //   },
+  // },
+  // {
+  //   label: "Paragraph",
+  //   icon: RiParagraph,
+  //   command: ({ editor, range }) => {
+  //     editor.chain().focus().deleteRange(range).setNode("paragraph").run();
+  //   },
+  // },
   {
     label: "Bullet List",
     icon: RiListUnordered,
