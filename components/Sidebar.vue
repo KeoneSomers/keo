@@ -263,12 +263,12 @@ const selectTask = async (taskId) => {
 
     <!-- account dropdown -->
     <div class="m-4">
-      <!-- Keo Plus Promo -->
+      <!-- Feedback Card -->
       <a
         @click="feedbackModalOpen = true"
-        class="block bg-gradient-to-r from-indigo-200 to-yellow-100 dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900 rounded-lg mb-2 p-4 cursor-pointer dark:hover:bg-indigo-900/75 hover:bg-indigo-400/75 hover:rotate-3 transition-transform hover:scale-105 hover:shadow-xl"
+        class="block bg-zinc-100 dark:bg-zinc-900 border dark:border-zinc-700 rounded-lg mb-2 p-2 cursor-pointer"
       >
-        <p class="text-sm font-bold opacity-80">Got feedback?</p>
+        <p class="text-xs font-bold opacity-80">Got feedback?</p>
         <p class="opacity-50 text-xs">We'd love to hear from you!</p>
       </a>
       <div class="flex space-x-1">
