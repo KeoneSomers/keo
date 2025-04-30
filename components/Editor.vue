@@ -365,4 +365,28 @@ p.is-editor-empty:first-child::before {
   font-size: 0.75rem;
   padding: 0.2rem 0.2rem;
 }
+
+.tiptap {
+  /* line-height: 7px; */
+}
+
+/* Adjust line height for lists */
+.prose ul,
+.prose ol {
+  line-height: 1.5; /* Match normal text line height */
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Adjust line height for paragraphs */
+.prose p {
+  line-height: 1.5; /* Match normal text line height */
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Adjust line height for new lines */
+.prose :where(br) {
+  line-height: 1.5; /* Match normal text line height */
+}
 </style>
