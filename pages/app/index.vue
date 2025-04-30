@@ -78,10 +78,10 @@ const taskOptions = [
       },
     },
     {
-      label: "Delete Task",
+      label: "Delete Page",
       icon: "i-heroicons-trash-20-solid",
       click: () => {
-        console.log("Delete Task");
+        console.log("Delete Page");
         isOpenDeleteConfirmation.value = true;
       },
     },
@@ -239,7 +239,7 @@ const saveIsCompleted = async () => {
               <div class="flex-1">
                 <UInput
                   v-model="title"
-                  placeholder="Give this task a name..."
+                  placeholder="Give this page a title..."
                   size="xl"
                   variant="none"
                   class="p-0.5"
@@ -341,7 +341,7 @@ const saveIsCompleted = async () => {
         </div>
       </UModal>
 
-      <!--Modal: Delete Task-->
+      <!--Modal: Delete Page-->
       <UModal v-model="isOpenDeleteConfirmation">
         <div class="p-4">
           <div class="sm:flex sm:items-start">
@@ -357,7 +357,7 @@ const saveIsCompleted = async () => {
               <h3
                 class="text-base font-semibold leading-6 text-zinc-800 dark:text-zinc-100"
               >
-                Delete Task
+                Delete Page
               </h3>
               <div class="mt-2">
                 <p class="text-sm text-gray-400">
@@ -374,7 +374,7 @@ const saveIsCompleted = async () => {
               class="ml-3"
               @click="deleteTask"
             >
-              Delete Task
+              Delete Page
             </UButton>
             <UButton
               color="gray"

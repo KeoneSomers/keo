@@ -25,7 +25,7 @@ const welcomeMessage = {
   content: [
     {
       text: {
-        value: "Hey! I'm your AI assistant ready to help you with this task.",
+        value: "Hey, I'm your AI assistant ready to help!",
       },
     },
   ],
@@ -95,7 +95,7 @@ const sendMessage = async () => {
           class="text-xs mb-1 opacity-30 flex items-center"
         >
           <span class="i-heroicons-sparkles-16-solid mr-0.5"></span>
-          GPT4o
+          Keo
         </div>
         <div
           class="flex pb-4"

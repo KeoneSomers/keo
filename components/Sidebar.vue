@@ -216,7 +216,7 @@ const selectTask = async (taskId) => {
 
     <div class="p-4">
       <UButton @click="throttledFnCreateNewTask" block color="black"
-        >New Task
+        >New Page
       </UButton>
     </div>
     <!-- search bar -->
@@ -254,7 +254,7 @@ const selectTask = async (taskId) => {
         >
           <span>{{
             task.title === "" || task.title === null
-              ? "Unnamed Task"
+              ? "Untitled Page"
               : task.title
           }}</span>
         </div>
