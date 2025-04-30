@@ -303,7 +303,7 @@ const toolbarActions = computed(() => {
     </div>
 
     <div class="flex flex-1 xl:w-2/3 mx-auto">
-      <div>
+      <div class="flex-1">
         <TiptapEditorContent :editor="editor" class="h-full" />
       </div>
     </div>
