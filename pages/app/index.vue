@@ -43,7 +43,7 @@ const saveTitle = async () => {
   const currentDatetimeZ = currentDate.toISOString();
 
   const { error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .update({ title: title.value, updated_at: currentDatetimeZ })
     .eq("id", selectedTask.value.id);
 
@@ -108,7 +108,7 @@ const clearChat = async () => {
 
   // update chat_thread_id in database
   const { error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .update({ chat_thread_id: thread.value.id })
     .eq("id", selectedTask.value.id);
 
@@ -147,7 +147,7 @@ const deleteTask = async () => {
   }
 
   const { error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .delete()
     .eq("id", selectedTask.value.id);
 
@@ -185,7 +185,7 @@ const saveIsCompleted = async () => {
   const currentDatetimeZ = currentDate.toISOString();
 
   const { error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .update({
       completed_at: isCompleted.value === true ? currentDatetimeZ : null,
     })

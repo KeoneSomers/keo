@@ -100,7 +100,7 @@ const saveNotes = async () => {
   const currentDatetimeZ = currentDate.toISOString();
 
   const { error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .update({ notes: selectedTask.value.notes, updated_at: currentDatetimeZ })
     .eq("id", selectedTask.value.id);
 

@@ -38,7 +38,7 @@ const accountDropdownItems = [
 
 const getTasks = async () => {
   const { data, error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .select("id, title, completed_at, created_at, updated_at")
     .eq("created_by", user.value.id)
     .order("id", { ascending: false });
@@ -160,7 +160,7 @@ const createNewTask = async () => {
 
   // Create task in superbase
   const { data: newTask, error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .insert({
       title: null,
       notes: null,
@@ -190,7 +190,7 @@ const handleSelectTask = async (taskId) => {
 
 const selectTask = async (taskId) => {
   const { data, error } = await supabase
-    .from("tasks")
+    .from("tasks-ai-app")
     .select()
     .single()
     .eq("id", taskId);
